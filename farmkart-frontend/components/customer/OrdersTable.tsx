@@ -15,42 +15,70 @@ interface Order {
 }
 
 const OrdersTable: React.FC<{ orders: Order[] }> = ({ orders }) => {
+    if (!orders || orders.length === 0) {
+        return <div className="text-center text-gray-600 py-6">No orders available</div>;
+    }
+
     return (
-        <div className="overflow-x-auto">
-            <table className="min-w-full bg-white shadow-md rounded-lg overflow-hidden">
-                <thead className="bg-gray-200 text-gray-700">
-                    <tr>
-                        <th className="px-6 py-3 text-left text-sm font-medium">Order ID</th>
-                        <th className="px-6 py-3 text-left text-sm font-medium">Total Price</th>
-                        <th className="px-6 py-3 text-left text-sm font-medium">Status</th>
-                        <th className="px-6 py-3 text-left text-sm font-medium">Payment Status</th>
-                        <th className="px-6 py-3 text-left text-sm font-medium">Delivery Date</th>
-                        <th className="px-6 py-3 text-left text-sm font-medium">Products</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {orders.map((order) => (
-                        <tr key={order._id} className="border-b">
-                            <td className="px-6 py-4 text-sm">{order._id}</td>
-                            <td className="px-6 py-4 text-sm text-green-700 font-bold">${order.totalPrice.toFixed(2)}</td>
-                            <td className="px-6 py-4 text-sm capitalize">{order.status}</td>
-                            <td className="px-6 py-4 text-sm capitalize">{order.paymentStatus}</td>
-                            <td className="px-6 py-4 text-sm">
-                                {new Date(order.estimatedDeliveryDate).toLocaleDateString()}
-                            </td>
-                            <td className="px-6 py-4 text-sm">
-                                <ul className="list-disc pl-5">
-                                    {order.products.map((item, idx) => (
-                                        <li key={idx}>
-                                            {item.quantity} x {item.product.name} (${item.product.price})
-                                        </li>
-                                    ))}
-                                </ul>
-                            </td>
+        <div className="flex justify-center py-6">
+            <div className="w-full max-w-4xl bg-white rounded-lg shadow-md overflow-hidden">
+                <table className="min-w-full">
+                    <thead className="bg-gradient-to-r from-green-500 to-green-600 text-white">
+                        <tr>
+                            <th className="px-4 py-2 text-left text-sm font-semibold">#</th>
+                            <th className="px-4 py-2 text-left text-sm font-semibold">Total Price</th>
+                            <th className="px-4 py-2 text-left text-sm font-semibold">Status</th>
+                            <th className="px-4 py-2 text-left text-sm font-semibold">Payment Status</th>
+                            <th className="px-4 py-2 text-left text-sm font-semibold">Delivery Date</th>
+                            <th className="px-4 py-2 text-left text-sm font-semibold">Products</th>
                         </tr>
-                    ))}
-                </tbody>
-            </table>
+                    </thead>
+                    <tbody className="divide-y divide-gray-200">
+                        {orders.map((order, index) => (
+                            <tr
+                                key={order._id}
+                                className={`hover:bg-gray-100 transition ${
+                                    index % 2 === 0 ? "bg-gray-50" : "bg-white"
+                                }`}
+                            >
+                                <td className="px-4 py-2 text-sm text-gray-800 font-medium">{index + 1}</td>
+                                <td className="px-4 py-2 text-sm font-bold text-green-600">
+                                    ${order.totalPrice.toFixed(2)}
+                                </td>
+                                <td className="px-4 py-2 text-sm capitalize text-gray-700">{order.status}</td>
+                                <td
+                                    className={`px-4 py-2 text-sm capitalize font-medium ${
+                                        order.paymentStatus === "paid"
+                                            ? "text-green-600"
+                                            : "text-red-600"
+                                    }`}
+                                >
+                                    {order.paymentStatus}
+                                </td>
+                                <td className="px-4 py-2 text-sm text-gray-700">
+                                    {order.estimatedDeliveryDate
+                                        ? new Date(order.estimatedDeliveryDate).toLocaleDateString()
+                                        : "N/A"}
+                                </td>
+                                <td className="px-4 py-2 text-sm text-gray-600">
+                                    <ul className="list-disc pl-5">
+                                        {order.products.length > 0 ? (
+                                            order.products.map((item, idx) => (
+                                                <li key={idx}>
+                                                    {item.quantity} x {item.product?.name || "Unknown"} ($
+                                                    {item.product?.price?.toFixed(2) || "0.00"})
+                                                </li>
+                                            ))
+                                        ) : (
+                                            <li>No products available</li>
+                                        )}
+                                    </ul>
+                                </td>
+                            </tr>
+                        ))}
+                    </tbody>
+                </table>
+            </div>
         </div>
     );
 };

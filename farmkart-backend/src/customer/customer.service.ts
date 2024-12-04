@@ -57,10 +57,10 @@ export class CustomerService {
 
     // Update a customer
     async updateCustomer(id: string, updateCustomerDto: UpdateCustomerDto): Promise<CustomerDocument> {
-        const hashedPassword = await bcrypt.hash(updateCustomerDto.password, 10);
+        
         const updatedCustomer = await this.customerModel.findByIdAndUpdate(
             id,
-            { ...updateCustomerDto, password: hashedPassword },
+            { ...updateCustomerDto },
             { new: true }
         ).exec();
 

@@ -13,6 +13,7 @@ import { useCart } from "@/lib/CartContext";
 import toast from "react-hot-toast";
 import { useUser } from "@/lib/userContext";
 import { useRouter } from "next/navigation";
+import { useState } from "react";
 
 interface ProductCardProps {
   product: {
@@ -31,21 +32,19 @@ interface ProductCardProps {
 
 export default function ProductCard({ product }: ProductCardProps) {
   const { user } = useUser();
-  const { name, price, stock, imageUrl, farmer } = product;
   const { addToCart } = useCart();
-  const  router  = useRouter(); 
+  const router = useRouter();
+
+  // Validate and handle the image URL
+  const validImageUrl = product.imageUrl?.startsWith("data:image/")
+    ? product.imageUrl
+    : "/pexels-shvetsa-5187579.jpg";
+
+  const [imgSrc, setImgSrc] = useState(validImageUrl);
 
   const handleAddToCart = () => {
     addToCart(product);
-
-    // Show a toast notification
-    toast.success(`${name} has been added to your cart!`, {
-      style: {
-        borderRadius: "8px",
-        background: "#16a34a",
-        color: "#fff",
-      }
-    });
+    toast.success(`${product.name} has been added to your cart!`);
   };
 
   return (
@@ -54,46 +53,48 @@ export default function ProductCard({ product }: ProductCardProps) {
       <CardHeader className="p-0">
         <div className="relative w-full h-40">
           <Image
-            src={"/pexels-wanchai-kt-1566348-9207452.jpg"}
-            alt={name}
+            src={imgSrc}
+            alt={product.name}
             layout="fill"
             objectFit="cover"
             className="rounded-t-lg"
+            onError={() => setImgSrc("/default-fallback.png")} // Set fallback URL
           />
         </div>
       </CardHeader>
 
       {/* Product Details */}
       <CardContent className="p-4">
-        <CardTitle className="text-base font-semibold truncate">{name}</CardTitle>
+        <CardTitle className="text-base font-semibold truncate">{product.name}</CardTitle>
         <p className="text-sm text-gray-600 truncate">
-          {farmer?.name || "Unknown Farmer"}
+          {product.farmer?.name || "Unknown Farmer"}
         </p>
-        <p className="mt-2 text-green-600 font-bold text-lg">${price}</p>
-        <p className={`text-sm mt-1 ${stock > 0 ? "text-gray-600" : "text-red-600"}`}>
-          {stock > 0 ? `${stock} in stock` : "Out of stock"}
+        <p className="mt-2 text-green-600 font-bold text-lg">${product.price}</p>
+        <p
+          className={`text-sm mt-1 ${
+            product.stock > 0 ? "text-gray-600" : "text-red-600"
+          }`}
+        >
+          {product.stock > 0 ? `${product.stock} in stock` : "Out of stock"}
         </p>
       </CardContent>
 
       {/* Add to Cart Button */}
       <CardFooter className="p-4 pt-0">
         <Button
-          onClick={() => user ? handleAddToCart() : router.push("/login") }
-          className="w-full bg-green-600 hover:bg-green-800"
-          disabled={stock === 0}
-          variant={stock > 0 ? "default" : "destructive"}
+          onClick={() => (user ? handleAddToCart() : router.push("/login"))}
+          className="w-full bg-green-600 hover:bg-green-800 flex justify-center items-center"
+          disabled={product.stock === 0}
         >
-          <span className="flex justify-center">
-            Add to Cart
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 24 24"
-              fill="currentColor"
-              className="size-6 ml-2"
-            >
-              <path d="M12 1.5a.75.75 0 0 1 .75.75V7.5h-1.5V2.25A.75.75 0 0 1 12 1.5ZM11.25 7.5v5.69l-1.72-1.72a.75.75 0 0 0-1.06 1.06l3 3a.75.75 0 0 0 1.06 0l3-3a.75.75 0 1 0-1.06-1.06l-1.72 1.72V7.5h3.75a3 3 0 0 1 3 3v9a3 3 0 0 1-3 3h-9a3 3 0 0 1-3-3v-9a3 3 0 0 1 3-3h3.75Z" />
-            </svg>
-          </span>
+          <span className="mr-2">Add to Cart</span>
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 24 24"
+            fill="currentColor"
+            className="w-5 h-5"
+          >
+            <path d="M12 1.5a.75.75 0 0 1 .75.75V7.5h-1.5V2.25A.75.75 0 0 1 12 1.5ZM11.25 7.5v5.69l-1.72-1.72a.75.75 0 0 0-1.06 1.06l3 3a.75.75 0 0 0 1.06 0l3-3a.75.75 0 1 0-1.06-1.06l-1.72 1.72V7.5h3.75a3 3 0 0 1 3 3v9a3 3 0 0 1-3 3h-9a3 3 0 0 1-3-3v-9a3 3 0 0 1 3-3h3.75Z" />
+          </svg>
         </Button>
       </CardFooter>
     </Card>
