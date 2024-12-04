@@ -129,6 +129,9 @@ const SignUpForm: React.FC = () => {
                 <Button
                     type="submit"
                     className="w-full py-3 rounded-lg font-bold text-white bg-gradient-to-r from-green-600 to-green-700 shadow-lg hover:shadow-xl hover:bg-gradient-to-l focus:outline-none transition-all duration-300"
+                    style={{
+                        background: 'linear-gradient(to right, #727543, #797142)',
+                    }}
                 >
                     Sign Up
                 </Button>

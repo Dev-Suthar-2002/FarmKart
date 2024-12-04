@@ -3,7 +3,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useUser } from "@/lib/userContext";
+import { useUser  } from "@/lib/userContext";
 import { useRouter } from "next/navigation"; 
 
 interface NavLink {
@@ -14,7 +14,7 @@ interface NavLink {
 function Navbar() {
   const pathname = usePathname();
   const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false);
-  const { user, logout } = useUser();
+  const { user, logout } = useUser ();
   const router = useRouter(); 
 
   const commonLinks: NavLink[] = [
@@ -28,11 +28,13 @@ function Navbar() {
     { href: "/product", label: "Product" },
     { href: "/about", label: "About Us" },
     { href: "/myorder", label: "My Orders" },
-    { href: "/cart", label:"My Cart"}
+    { href: "/cart", label:"My Cart"},
+    {href:`/customer/profile/${user?._id}`, label: "Profile"}
   ];
 
   const farmerLinks: NavLink[] = [
     { href: "/dashboard", label: "Dashboard" },
+    {href:`/farmer/profile/${user?._id}`, label: "Profile"}
   ];
 
   const roleBasedLinks = user?.role === "customer" ? customerLinks : user?.role === "farmer" ? farmerLinks : [];
@@ -43,7 +45,7 @@ function Navbar() {
   };
 
   return (
-    <nav className="bg-navbar-bg shadow-md relative">
+    <nav className="fixed top-0 left-0 right-0 z-50 bg-navbar-bg shadow-md">
       <div className="flex items-center justify-between px-6 py-4">
         {/* LOGO */}
         <div className="flex items-center text-xl font-bold text-green-600">
@@ -149,7 +151,7 @@ function Navbar() {
                       <path fillRule="evenodd" d="M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25Zm4.28 10.28a.75.75 0 0 0 0-1.06l-3-3a.75.75 0 1 0-1.06 1.06l1.72 1.72H8.25a.75.75 0 0 0 0 1.5h5.69l-1.72 1.72a.75.75 0 1 0 1.06 1.06l3-3Z" clipRule="evenodd" />
                     </svg>
                   </span>
-                </button>
+ </button>
               </Link>
             )}
           </div>

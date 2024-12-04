@@ -8,6 +8,7 @@ import Navbar from "@/components/shared/Navbar";
 import Footer from "@/components/shared/Footer";
 import { UserProvider } from "@/lib/userContext";
 import { CartProvider } from "@/lib/CartContext";
+import TokenExpirationChecker from "@/lib/TokenExpirationChecker";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -30,12 +31,13 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+
   return (
     <html lang="en">
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased flex flex-col min-h-screen`} >
-        
         <UserProvider>
         <CartProvider>
+        <TokenExpirationChecker />
             {/* Navbar */}
             <Navbar />
 

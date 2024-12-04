@@ -5,6 +5,7 @@ import { useCart } from '@/lib/CartContext';
 import { useRouter } from 'next/navigation';
 import api from '@/lib/api'; // Import the custom API utility
 import toast from 'react-hot-toast';
+import Button from '../shared/Button';
 
 export default function MyCart() {
   const { cart, updateQuantity, removeFromCart, clearCart } = useCart();
@@ -85,25 +86,25 @@ export default function MyCart() {
                   </div>
                 </div>
                 <div className="flex items-center gap-2">
-                  <button
+                  <Button
                     onClick={() => updateQuantity(product._id, Math.max(1, quantity - 1))}
                     className="w-8 h-8 flex items-center justify-center text-gray-700 bg-gray-100 hover:bg-gray-200 rounded-full"
                   >
                     -
-                  </button>
+                  </Button>
                   <span className="text-lg font-medium text-gray-800">{quantity}</span>
-                  <button
+                  <Button
                     onClick={() => updateQuantity(product._id, quantity + 1)}
                     className="w-8 h-8 flex items-center justify-center text-gray-700 bg-gray-100 hover:bg-gray-200 rounded-full"
                   >
                     +
-                  </button>
-                  <button
+                  </Button>
+                  <Button
                     onClick={() => removeFromCart(product._id)}
                     className="text-red-500 hover:text-red-700 hover:underline text-sm ml-4"
                   >
                     Remove
-                  </button>
+                  </Button>
                 </div>
               </div>
             ))}
@@ -115,7 +116,7 @@ export default function MyCart() {
           </div>
 
           {/* Place Order Button */}
-          <button
+          <Button
             onClick={handlePlaceOrder}
             disabled={isLoading}
             className={`mt-6 w-full text-lg font-medium px-6 py-3 rounded-lg shadow-md transition ${
@@ -125,7 +126,7 @@ export default function MyCart() {
             }`}
           >
             {isLoading ? 'Placing Order...' : 'Place Order'}
-          </button>
+          </Button>
         </>
       )}
     </div>
