@@ -4,6 +4,7 @@ import { useState } from 'react';
 import Button from '../shared/Button';
 import api from '@/lib/api';
 import { useRouter } from "next/navigation";
+import Input from './Input';
 
 
 const ForgotPasswordForm = () => {
@@ -90,18 +91,17 @@ const ForgotPasswordForm = () => {
                 {step === 1 && (
                     <form onSubmit={requestOtp} className="space-y-6">
                         <h1 className="text-3xl font-bold text-center text-gray-800">Forgot Password</h1>
-                        <input
+                        <Input
                             type="email"
                             name="email"
                             placeholder="Enter your email"
                             value={email}
                             onChange={handleEmailChange}
-                            className="block w-full border border-gray-300 rounded-lg p-3 focus:outline-none focus:ring-4 focus:ring-blue-400"
                             required />
                         {errors.email && <p className="text-red-500">{errors.email}</p>}
-                        <Button 
-                        type="submit" 
-                        style={{ background: 'linear-gradient(to right, #727543, #797142)' }}
+                        <Button
+                            type="submit"
+                            style={{ background: 'linear-gradient(to right, #727543, #797142)', width: '100%' }}
                         >
                             Request OTP
                         </Button>
@@ -110,17 +110,16 @@ const ForgotPasswordForm = () => {
                 {step === 2 && (
                     <form onSubmit={verifyOtp} className="space-y-6">
                         <h1 className="text-3xl font-bold text-center text-gray-800">Verify OTP</h1>
-                        <input
+                        <Input
                             type="text"
                             name="otp"
                             placeholder="Enter the OTP sent to your email"
                             value={otp}
                             onChange={handleOtpChange}
-                            className="block w-full border border-gray-300 rounded-lg p-3 focus:outline-none focus:ring-4 focus:ring-blue-400"
                             required
                         />
                         {errors.otp && <p className="text-red-500">{errors.otp}</p>}
-                        <Button type="submit" style={{ background: 'linear-gradient(to right, #727543, #797142)' }}>
+                        <Button type="submit" style={{ background: 'linear-gradient(to right, #727543, #797142)', width: '100%' }}>
                             Verify
                         </Button>
                     </form>
@@ -128,26 +127,24 @@ const ForgotPasswordForm = () => {
                 {step === 3 && (
                     <form onSubmit={resetPassword} className="space-y-6">
                         <h1 className="text-3xl font-bold text-center text-gray-800">Reset Password</h1>
-                        <input
+                        <Input
                             type="password"
                             name="newPassword"
                             placeholder="New Password"
                             value={newPassword}
                             onChange={handleNewPasswordChange}
-                            className="block w-full border border-gray-300 rounded-lg p-3 focus:outline-none focus:ring-4 focus:ring-blue-400"
                             required
                         />
                         {errors.newPassword && <p className="text-red-500">{errors.newPassword}</p>}
-                        <input
+                        <Input
                             type="password"
                             name="reNewPassword"
                             placeholder="Re-enter New Password"
                             value={reNewPassword}
                             onChange={handleReNewPasswordChange}
-                            className="block w-full border border-gray-300 rounded-lg p-3 focus:outline-none focus:ring-4 focus:ring-blue-400"
                             required
                         />
-                        <Button type="submit" style={{ background: 'linear-gradient(to right, #727543, #797142)' }}>
+                        <Button type="submit" style={{ background: 'linear-gradient(to right, #727543, #797142)', width: '100%' }}>
                             Update Password
                         </Button>
                     </form>

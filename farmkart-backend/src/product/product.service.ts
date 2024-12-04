@@ -45,10 +45,13 @@ export class ProductService {
         return updatedProduct;
     }
 
-    async deleteProduct(id: string): Promise<void> {
-        const result = await this.productModel.findByIdAndDelete(id).exec();
-        if (!result) {
+    async deleteProduct(id: string): Promise<Product[]> {
+        const product = await this.productModel.findById(id).exec();
+        if (!product) {
             throw new NotFoundException(`Product with ID ${id} not found`);
         }
+        await this.productModel.findByIdAndDelete(id).exec();
+        
+        return this.productModel.find().populate('farmer').exec();
     }
 }

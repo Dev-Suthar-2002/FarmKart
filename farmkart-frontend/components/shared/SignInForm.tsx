@@ -25,15 +25,17 @@ const SignInForm: React.FC = () => {
                 method: "POST",
                 body: data,
             });
-
+    
             // Store access token and user data in local storage
+            const expirationTime = Date.now() + 60 * 60 * 1000; // 60 minutes from now
             localStorage.setItem("access_token", response.access_token);
             localStorage.setItem("user", JSON.stringify(response.user));
-
+            localStorage.setItem("expiration_time", expirationTime.toString()); // Store expiration time
+    
             // Update context state
             setAccessToken(response.access_token);
-            setUser(response.user);
-
+            setUser (response.user);
+    
             toast.success("Signin Successful", {
                 style: {
                   borderRadius: "8px",
@@ -41,8 +43,7 @@ const SignInForm: React.FC = () => {
                   color: "#fff",
                 }
             });
-
-
+    
             // Redirect to the correct page based on the role from backend
             const redirectPath = response.user.role === "farmer" ? "/dashboard" : "/home";
             router.push(redirectPath);
@@ -50,6 +51,10 @@ const SignInForm: React.FC = () => {
             console.error("Login failed:", error);
             setErrorMessage("Login failed. Please check your credentials and try again.");
         }
+    };
+
+    const handleForgotPasswordClick = () => {
+        router.push("/resetPassword");
     };
 
     return (
@@ -77,13 +82,24 @@ const SignInForm: React.FC = () => {
                 {/* Display Error Message */}
                 {errorMessage && <p className="text-sm text-red-500 mt-2">{errorMessage}</p>}
 
+                <p
+                    onClick={handleForgotPasswordClick}
+                    className="mt-4 text-sm text-center text-blue-600 hover:underline cursor-pointer"
+                >
+                    Forgot Password?
+                </p>
+
                 {/* Submit Button */}
                 <Button
                     type="submit"
                     className="w-full py-3 rounded-lg font-bold text-white bg-gradient-to-r from-green-600 to-green-700 shadow-lg hover:shadow-xl hover:bg-gradient-to-l focus:outline-none transition-all duration-300"
+                    style={{
+                        background: 'linear-gradient(to right, #727543, #797142)',
+                    }}
                 >
                     Sign In
                 </Button>
+
             </form>
         </div>
     );
