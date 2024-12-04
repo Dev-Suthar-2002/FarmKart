@@ -44,13 +44,14 @@ export class FarmerService {
         return farmer;
     }
 
-    // Find a farmer by email
-    async findOneByEmail(email: string): Promise<FarmerDocument> {
-        const farmer = await this.farmerModel.findOne({ email }).exec();
-        if (!farmer) {
-            throw new NotFoundException(`Farmer with email ${email} not found`);
+    async findOneByEmail(email: string): Promise<FarmerDocument | null> {
+        try {
+            const farmer = await this.farmerModel.findOne({ email }).exec();
+            return farmer;
+        } catch (error) {
+            console.error(`Error finding farmer by email: ${email}`, error);
+            return null;
         }
-        return farmer;
     }
 
     // Update a farmer

@@ -46,13 +46,14 @@ export class CustomerService {
         return customer;
     }
 
-    // Find a customer by email
-    async findOneByEmail(email: string): Promise<CustomerDocument> {
-        const customer = await this.customerModel.findOne({ email }).exec();
-        if (!customer) {
-            throw new NotFoundException(`Customer with email ${email} not found`);
+    async findOneByEmail(email: string): Promise<CustomerDocument | null> {
+        try {
+            const customer = await this.customerModel.findOne({ email }).exec();
+            return customer;
+        } catch (error) {
+            console.error(`Error finding customer by email: ${email}`, error);
+            return null;
         }
-        return customer;
     }
 
     // Update a customer
