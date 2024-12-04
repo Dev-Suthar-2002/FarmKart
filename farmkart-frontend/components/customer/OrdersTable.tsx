@@ -48,7 +48,7 @@ const OrdersTable: React.FC<{ orders: Order[] }> = ({ orders }) => {
                                 <td className="px-4 py-2 text-sm capitalize text-gray-700">{order.status}</td>
                                 <td
                                     className={`px-4 py-2 text-sm capitalize font-medium ${
-                                        order.paymentStatus === "paid"
+                                        order.paymentStatus === "completed"
                                             ? "text-green-600"
                                             : "text-red-600"
                                     }`}
