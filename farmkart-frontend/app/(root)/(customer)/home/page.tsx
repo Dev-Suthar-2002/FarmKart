@@ -1,20 +1,8 @@
 import ProductCard from "@/components/customer/ProductCard";
 import Hero from "@/components/shared/Hero";
 import api from "@/lib/api";
+import { Product } from "@/lib/CartContext";
 import Link from "next/link";
-
-interface Product {
-  _id: string;
-  name: string;
-  description: string;
-  price: number;
-  stock: number;
-  category: string;
-  imageUrl?: string;
-  farmer: {
-    name: string;
-  };
-}
 
 async function fetchProducts(): Promise<Product[]> {
   try {

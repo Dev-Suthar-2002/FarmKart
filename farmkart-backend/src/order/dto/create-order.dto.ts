@@ -1,6 +1,7 @@
 import { IsEnum, IsNotEmpty, IsNumber, IsString, IsArray, IsOptional } from "class-validator";
 import { Type } from "class-transformer";
 import { PaymentMethod, OrderStatus, PaymentStatus } from "../order.schema";
+import { Types } from "mongoose";
 
 export class CreateOrderDto {
     @IsNotEmpty()
@@ -22,6 +23,7 @@ export class CreateOrderDto {
     products: {
         product: string; 
         quantity: number; 
+        farmer: string;
     }[]; 
 
     @IsEnum(OrderStatus)

@@ -9,7 +9,6 @@ import { PassportModule } from '@nestjs/passport';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { CustomerModule } from 'src/customer/customer.module';
 import { MailService } from './mail.service';
-// import { LocalStrategy } from './local.strategy';
 
 @Module({
     imports: [FarmerModule, CustomerModule,

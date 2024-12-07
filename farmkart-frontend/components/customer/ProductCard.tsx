@@ -7,7 +7,7 @@ import {
   CardContent,
   CardFooter,
 } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
+import Button from "../shared/Button";
 import Image from "next/image";
 import { useCart } from "@/lib/CartContext";
 import toast from "react-hot-toast";
@@ -58,7 +58,7 @@ export default function ProductCard({ product }: ProductCardProps) {
             layout="fill"
             objectFit="cover"
             className="rounded-t-lg"
-            onError={() => setImgSrc("/default-fallback.png")} // Set fallback URL
+            onError={() => setImgSrc("/default-fallback.png")}
           />
         </div>
       </CardHeader>

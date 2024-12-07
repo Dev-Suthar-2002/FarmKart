@@ -34,6 +34,7 @@ export class ProductService {
         if (!product) {
             throw new NotFoundException(`Product with ID ${id} not found`);
         }
+        
         return product;
     }
 
@@ -42,6 +43,7 @@ export class ProductService {
         if (!updatedProduct) {
             throw new NotFoundException(`Product with ID ${id} not found`);
         }
+
         return updatedProduct;
     }
 

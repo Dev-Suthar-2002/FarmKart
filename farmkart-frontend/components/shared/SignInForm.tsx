@@ -16,35 +16,33 @@ const SignInForm: React.FC = () => {
     const { register, handleSubmit, formState: { errors } } = useForm<LoginDto>();
     const router = useRouter();
     const { setUser, setAccessToken } = useUser();
-    const [errorMessage, setErrorMessage] = useState<string | null>(null); // Error message state
+    const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
     const onSubmit = async (data: LoginDto) => {
-        setErrorMessage(null); // Reset error message
+        setErrorMessage(null);
         try {
             const response = await api("/auth/login", {
                 method: "POST",
                 body: data,
             });
-    
-            // Store access token and user data in local storage
-            const expirationTime = Date.now() + 60 * 60 * 1000; // 60 minutes from now
+
+            const expirationTime = Date.now() + 60 * 60 * 1000;
             localStorage.setItem("access_token", response.access_token);
             localStorage.setItem("user", JSON.stringify(response.user));
-            localStorage.setItem("expiration_time", expirationTime.toString()); // Store expiration time
-    
+            localStorage.setItem("expiration_time", expirationTime.toString());
+
             // Update context state
             setAccessToken(response.access_token);
-            setUser (response.user);
-    
+            setUser(response.user);
+
             toast.success("Signin Successful", {
                 style: {
-                  borderRadius: "8px",
-                  background: "#16a34a",
-                  color: "#fff",
+                    borderRadius: "8px",
+                    background: "#16a34a",
+                    color: "#fff",
                 }
             });
-    
-            // Redirect to the correct page based on the role from backend
+
             const redirectPath = response.user.role === "farmer" ? "/dashboard" : "/home";
             router.push(redirectPath);
         } catch (error) {

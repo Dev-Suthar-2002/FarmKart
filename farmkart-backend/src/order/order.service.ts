@@ -16,56 +16,67 @@ export class OrderService {
         @InjectModel(Product.name) private productModel : Model<ProductDocument>
     ) { }
 
-    // async createOrder(createOrderDto : CreateOrderDto) : Promise<Order> {
-    //     const { customer,products,paymentMethod,estimatedDeliveryDate,status,paymentStatus,transactionId, totalPrice } = createOrderDto;
-
-    //     const newOrder = await new this.orderModel({
-    //         customer : customer,
-    //         products,
-    //         totalPrice,
-    //         paymentMethod,
-    //         status,
-    //         paymentStatus,
-    //         transactionId,
-    //         estimatedDeliveryDate,
-    //     }).save();
-
-    //     await this.customerModel.findByIdAndUpdate(
-    //         customer,
-    //         { $push: {orders: newOrder._id} },
-    //         { new : true},
-    //     );
-
-    //     return newOrder;
-    // }
     async createOrder(createOrderDto: CreateOrderDto): Promise<Order> {
-        const { customer, products, totalPrice } = createOrderDto;
-      
-        // Check if customer exists
-        const existingCustomer = await this.customerModel.findById(customer);
-        if (!existingCustomer) {
+      const { customer, products } = createOrderDto;
+  
+      const existingCustomer = await this.customerModel.findById(customer);
+      if (!existingCustomer) {
           throw new NotFoundException(`Customer with ID ${customer} not found`);
-        }
-      
-        // Validate products
-        for (const item of products) {
+      }
+  
+      for (const item of products) {
           const product = await this.productModel.findById(item.product);
           if (!product) {
-            throw new NotFoundException(`Product with ID ${item.product} not found`);
+              throw new NotFoundException(`Product with ID ${item.product} not found`);
           }
           if (product.stock < item.quantity) {
-            throw new Error(`Product ${product.name} has insufficient stock`);
+              throw new Error(`Product ${product.name} has insufficient stock`);
           }
-        }
-      
-        const newOrder = new this.orderModel(createOrderDto);
-        await newOrder.save();
-      
-        // Update customer's order list
-        await this.customerModel.findByIdAndUpdate(customer, { $push: { orders: newOrder._id } });
-      
-        return newOrder;
-    }
+      }
+  
+      const newOrder = new this.orderModel(createOrderDto);
+      await newOrder.save();
+  
+      await this.customerModel.findByIdAndUpdate(customer, { $push: { orders: newOrder._id } });
+  
+      return newOrder;
+  }
+
+  async findOrdersByFarmerId(farmerId: string): Promise<Partial<Order>[]> {
+    const orders = await this.orderModel
+        .find({ 'products.farmer': farmerId.toString() })
+        .populate('customer', 'name email')
+        .populate({
+            path: 'products.product',
+            select: 'name price',
+        })
+        .exec();
+
+    const filteredOrders = orders.map(order => {
+        const filteredProducts = order.products.filter(
+            product =>
+                product.farmer === farmerId.toString() &&
+                typeof product.product !== 'string'
+        );
+
+        const recalculatedTotalPrice = filteredProducts.reduce((total, product) => {
+            const productData = product.product as unknown as Product;
+            return total + productData.price * product.quantity;
+        }, 0);
+
+        return {
+            ...order.toObject(),
+            products: filteredProducts,
+            totalPrice: recalculatedTotalPrice,
+        };
+    });
+
+    return filteredOrders;
+}
+
+
+
+
 
     async findOrdersByCustomerId(customerId: string): Promise<Order[]> {
       // Validate customer existence

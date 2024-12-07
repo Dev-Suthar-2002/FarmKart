@@ -48,10 +48,11 @@ export class Order extends Document {
     @Prop([
         {
             product: { type: Types.ObjectId, ref: 'Product', required: true },
-            quantity: { type: Number, required: true }
+            quantity: { type: Number, required: true },
+            farmer: {type: String}
         },
     ])
-    products: { product: Types.ObjectId; quantity: number }[];
+    products: { product: Types.ObjectId; quantity: number; farmer: string}[];
 
     @Prop({ type: Types.ObjectId, ref: 'Customer', required: true })
     customer: Types.ObjectId;

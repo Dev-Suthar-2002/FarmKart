@@ -1,4 +1,5 @@
 import React from 'react';
+import Button from './Button';
 
 interface TogglePanelProps {
     title: string;
@@ -15,16 +16,15 @@ const TogglePanel: React.FC<TogglePanelProps> = ({ title, description, onToggle 
             <p className="text-gray-600 mb-4 text-sm leading-relaxed">
                 {description}
             </p>
-            <button
-                className="relative w-full text-white font-semibold rounded-lg py-3 overflow-hidden transition-transform transform hover:scale-110 focus:outline-none button-glow"
+            <Button
+                className="relative w-full text-white font-semibold rounded-lg py-3 overflow-hidden transition-transform transform"
                 style={{
                     background: 'linear-gradient(to right, #727543, #797142)',
                 }}
                 onClick={onToggle}
             >
-                <span className="absolute top-0 left-[-100%] w-[300%] h-full bg-white opacity-20 transform skew-x-[-30deg] transition-all duration-600 ease-in-out hover:left-full"></span>
                 {title.includes('Welcome Back!') ? 'Sign In' : 'Sign Up'}
-            </button>
+            </Button>
         </div>
     );
 };

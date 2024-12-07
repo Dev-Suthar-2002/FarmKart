@@ -7,7 +7,7 @@ export default function Hero () {
       <section
           className="relative w-full h-screen bg-cover bg-center bg-no-repeat"
           style={{
-            backgroundImage: "url('/pexels-loifotos-1660898.jpg')", // Replace with your image path
+            backgroundImage: "url('/pexels-loifotos-1660898.jpg')",
           }}
       >
         {/* Overlay */}

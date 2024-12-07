@@ -9,13 +9,6 @@ import { JwtAuthGuard } from 'src/auth/guard/auth.guard';
 export class OrderController {
     constructor(private readonly orderService: OrderService) { }
 
-    // @UseGuards(JwtAuthGuard)
-    // @Post()
-    // async create(@Body() createOrderDto: CreateOrderDto, @Request() payload): Promise<Order> {
-    //     const customer = payload.user._id;
-    //     return this.orderService.createOrder({...createOrderDto,customer});
-    // }
-
     @UseGuards(JwtAuthGuard)
     @Post()
     async createOrder(@Body() createOrderDto: CreateOrderDto, @Request() payload): Promise<CreateOrderDto> {
@@ -30,11 +23,20 @@ export class OrderController {
         products: order.products.map(p => ({
           product: p.product.toString(),
           quantity: p.quantity,
+          farmer: p.farmer,
         })),
         status: order.status,
         paymentStatus: order.paymentStatus,
         transactionId: order.transactionId || null,
       };
+    }
+
+    @Get('farmer-orders')
+    @UseGuards(JwtAuthGuard)
+    async getOrdersByFarmer(@Request() req): Promise<Partial<Order>[]> {
+        const farmerId = req.user._id;
+        console.log("Farmer", farmerId);
+        return this.orderService.findOrdersByFarmerId(farmerId);
     }
 
     @Get()
@@ -45,7 +47,7 @@ export class OrderController {
     @Get('customer-orders')
     @UseGuards(JwtAuthGuard)
     async getCustomerOrders(@Request() payload): Promise<Order[]> {
-        const customerId = payload.user._id; // Extract customer ID from the token
+        const customerId = payload.user._id;
         return this.orderService.findOrdersByCustomerId(customerId);
     }
 

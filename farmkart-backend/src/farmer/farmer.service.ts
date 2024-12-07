@@ -10,9 +10,8 @@ import * as bcrypt from 'bcrypt';
 export class FarmerService {
     constructor(
         @InjectModel(Farmer.name) private farmerModel: Model<FarmerDocument>,
-    ) {}
+    ) { }
 
-    // Create a new farmer
     async createFarmer(createFarmerDto: CreateFarmerDto): Promise<FarmerDocument> {
         const existingFarmer = await this.farmerModel.findOne({ email: createFarmerDto.email }).exec();
         if (existingFarmer) {
@@ -20,22 +19,21 @@ export class FarmerService {
         }
 
         const hashedPassword = await bcrypt.hash(createFarmerDto.password, 10);
-        
         const createdFarmer = new this.farmerModel({ ...createFarmerDto, password: hashedPassword });
-        return createdFarmer.save(); 
+
+        return createdFarmer.save();
     }
 
-    // Find all farmers
     async findAll(): Promise<FarmerDocument[]> {
         return this.farmerModel.find().populate('products').exec();
     }
 
-    // Find a farmer by ID
     async findOne(id: string): Promise<FarmerDocument> {
         const farmer = await this.farmerModel.findById(id).populate('products').exec();
         if (!farmer) {
             throw new NotFoundException(`Farmer with ID ${id} not found`);
         }
+
         return farmer;
     }
 
@@ -54,18 +52,12 @@ export class FarmerService {
         }
     }
 
-    // Update a farmer
     async updateFarmer(id: string, updateFarmerDto: UpdateFarmerDto): Promise<FarmerDocument> {
-        // if (!updateFarmerDto.password) {
-        //     throw new Error('Password is required to update the user');
-        // }
-
-        // const hashedPassword = await bcrypt.hash(updateFarmerDto.password, 10);
         const updatedFarmer = await this.farmerModel.findByIdAndUpdate(
-        id,
-        { ...updateFarmerDto }, // Spread the updated fields
-        { new: true }
-    ).exec();
+            id,
+            { ...updateFarmerDto },
+            { new: true }
+        ).exec();
 
         if (!updatedFarmer) {
             throw new NotFoundException(`Farmer with ID ${id} not found`);
@@ -74,7 +66,6 @@ export class FarmerService {
         return updatedFarmer;
     }
 
-    // Delete a farmer
     async deleteFarmer(id: string): Promise<void> {
         const result = await this.farmerModel.findByIdAndDelete(id).exec();
         if (!result) {
