@@ -1,0 +1,40 @@
+.orders-page {
+    padding-top: 80px; /* Adjust for navbar */
+    padding-bottom: 60px; /* Adjust for footer */
+    background-color: #f9f9f9;
+    min-height: 100vh;
+  }
+  
+  .orders-container {
+    max-width: 1200px;
+    margin: auto;
+    padding: 20px;
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  .orders-title {
+    text-align: center;
+    font-size: 2rem;
+    color: #2e7d32;
+  }
+  
+  .highlight {
+    color: #388e3c;
+    font-weight: bold;
+  }
+  
+  .loading-state,
+  .error-state {
+    text-align: center;
+    font-size: 1.2rem;
+    color: #555;
+  }
+  
+  .no-orders {
+    text-align: center;
+    font-size: 1.2rem;
+    color: #999;
+  }
+  

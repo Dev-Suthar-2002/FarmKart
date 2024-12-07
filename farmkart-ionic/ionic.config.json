@@ -1,0 +1,7 @@
+{
+  "name": "FarmKart",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "react-vite"
+}
