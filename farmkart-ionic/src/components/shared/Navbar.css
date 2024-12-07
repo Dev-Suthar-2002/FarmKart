@@ -1,0 +1,51 @@
+/* Navbar */
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 2rem;
+    background-color: #8f802c; /* Matching the theme */
+    color: white;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    position: fixed;
+    width: 100%;
+    top: 0;
+    z-index: 1000;
+  }
+  
+  /* Logo Styling */
+  .navbar-logo img {
+    height: 50px;
+    cursor: pointer;
+  }
+  
+  /* Login Button Styling */
+  .navbar-login {
+    background-color: #d4af37; /* Modern gold shade for contrast */
+    color: white;
+    border: none;
+    padding: 0.6rem 1.4rem;
+    border-radius: 50px; /* Rounded edges for a modern look */
+    font-size: 1rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+  }
+  
+  /* Hover Effect for Login Button */
+  .navbar-login:hover {
+    background-color: #bfa025; /* Slightly darker gold shade */
+    transform: translateY(-2px);
+  }
+  
+  /* Icon inside the Button */
+  .button-icon {
+    margin-left: 8px;
+    height: 18px;
+    width: 18px;
+  }
+  

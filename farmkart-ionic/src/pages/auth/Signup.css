@@ -1,0 +1,102 @@
+.auth-page {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh; /* Ensures full viewport height */
+  background: linear-gradient(135deg, #e0f7fa, #b2dfdb); /* Gradient background */
+  padding: 1rem; /* Padding for smaller screens */
+  box-sizing: border-box; /* Avoids padding overflow */
+}
+
+.auth-container {
+  width: 100%;
+  max-width: 400px; /* Constrain width */
+  padding: 2rem;
+  background: #ffffff; /* Clean white background */
+  border-radius: 12px;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15); /* Shadow effect */
+  text-align: center;
+  transition: transform 0.3s, box-shadow 0.3s; /* Hover effects */
+}
+
+.auth-container:hover {
+  transform: translateY(-5px); /* Slight hover lift */
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2); /* Enhanced hover shadow */
+}
+
+.auth-title {
+  font-size: 2.2rem; /* Adjusted for responsiveness */
+  font-weight: 800; /* Extra bold */
+  color: #004d40; /* Dark green for strong contrast */
+  margin-bottom: 1.5rem;
+}
+
+.auth-form {
+  margin-top: 1rem;
+}
+
+.auth-error {
+  color: #d32f2f; /* Red for errors */
+  font-size: 0.9rem;
+  margin-top: 0.5rem;
+  animation: fadeIn 0.3s ease-in-out; /* Subtle fade-in effect */
+}
+
+.auth-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  margin-top: 1.5rem;
+  padding: 0.75rem;
+  font-size: 1rem;
+  font-weight: bold;
+  color: #ffffff; /* White text */
+  background: linear-gradient(135deg, #388e3c, #2e7d32); /* Vibrant green gradient */
+  border-radius: 12px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Button shadow */
+  transition: background 0.3s, transform 0.2s, box-shadow 0.2s; /* Smooth transitions */
+}
+
+.auth-button:hover {
+  background: linear-gradient(135deg, #4caf50, #43a047); /* Brighter green on hover */
+  transform: translateY(-3px); /* Slight hover lift */
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2); /* Enhanced hover shadow */
+}
+
+.auth-button:focus {
+  outline: none; /* Remove default outline */
+  box-shadow: 0 0 0 3px rgba(56, 142, 60, 0.3); /* Accessibility focus indicator */
+}
+
+.auth-forgot-password {
+  margin-top: 1rem;
+  font-size: 0.9rem;
+  color: #0288d1; /* Blue for links */
+  cursor: pointer;
+  transition: color 0.2s; /* Smooth transition */
+}
+
+.auth-forgot-password:hover {
+  color: #01579b; /* Darker blue */
+  text-decoration: underline;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@media (max-width: 600px) {
+  .auth-container {
+    padding: 1.5rem; /* Reduced padding for smaller screens */
+  }
+
+  .auth-title {
+    font-size: 2rem; /* Adjusted title size for small screens */
+  }
+}

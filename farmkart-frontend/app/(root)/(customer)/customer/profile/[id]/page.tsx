@@ -16,7 +16,7 @@ interface User {
     role: string;
 }
 
-const CustomerProfilePage = () => {
+const CustomerProfilePage = (user:any) => {
     const { id } = useParams(); // Get the user ID from the URL
     const [userData, setUserData] = useState<User | null>(null);
 
