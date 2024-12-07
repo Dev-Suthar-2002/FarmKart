@@ -27,21 +27,19 @@ const SignUpForm: React.FC = () => {
                 body: data,
             });
 
-            // Save user data to localStorage (if needed)
+            // Save user data to localStorage
             localStorage.setItem("user", JSON.stringify(response));
 
             toast.success("Signup Successful", {
                 style: {
-                  borderRadius: "8px",
-                  background: "#16a34a",
-                  color: "#fff",
+                    borderRadius: "8px",
+                    background: "#16a34a",
+                    color: "#fff",
                 }
             });
 
             // Reset form
             reset();
-
-            // Redirect to login page after successful signup
             router.push("/login");
         } catch (error) {
             console.error("Registration failed:", error);
@@ -52,6 +50,7 @@ const SignUpForm: React.FC = () => {
         <div className="max-w-lg mx-auto mt-10 p-6 border border-gray-200 rounded-lg shadow-lg bg-white transition-all duration-300 hover:shadow-xl">
             <h2 className="text-3xl font-extrabold text-gray-800 text-center mb-8">Create an Account</h2>
             <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
+
                 {/* Name */}
                 <Input
                     type="text"

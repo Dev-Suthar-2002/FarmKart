@@ -34,7 +34,8 @@ function Navbar() {
 
   const farmerLinks: NavLink[] = [
     { href: "/dashboard", label: "Dashboard" },
-    {href:`/farmer/profile/${user?._id}`, label: "Profile"}
+    {href:`/farmer/profile/${user?._id}`, label: "Profile"},
+    {href:"/manageOrders", label:"Orders"}
   ];
 
   const roleBasedLinks = user?.role === "customer" ? customerLinks : user?.role === "farmer" ? farmerLinks : [];

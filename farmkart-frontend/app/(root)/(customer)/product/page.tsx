@@ -4,19 +4,7 @@ import { useState, useEffect } from "react";
 import ProductCard from "@/components/customer/ProductCard";
 import ProductFilter from "@/components/customer/ProductFilter";
 import api from "@/lib/api";
-
-interface Product {
-  _id: string;
-  name: string;
-  description: string;
-  price: number;
-  stock: number;
-  category: string;
-  imageUrl?: string;
-  farmer: {
-    name: string;
-  };
-}
+import { Product } from "@/lib/CartContext";
 
 export default function ProductsPage() {
   const [products, setProducts] = useState<Product[]>([]);

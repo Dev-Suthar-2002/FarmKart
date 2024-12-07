@@ -29,10 +29,8 @@ const useTokenExpiration = () => {
             }
         };
 
-        // Check token expiration on component mount
         checkTokenExpiration();
 
-        // Optionally, set an interval to check every minute
         const interval = setInterval(checkTokenExpiration, 60 * 1000);
 
         return () => clearInterval(interval);

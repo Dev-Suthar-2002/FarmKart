@@ -19,28 +19,7 @@ export class AuthService {
         private readonly jwtService: JwtService,
     ) {}
 
-    // validating the user by email, role and password.
-    // private async validateUser (email: string, password: string, role: Role): Promise<Farmer | Customer> {
-    //     let user;
-    //     if (role === Role.FARMER) {
-    //         user = await this.farmerService.findOneUserByEmail(email);
-    //     } else if (role === Role.CUSTOMER) {
-    //         user = await this.customerService.findOneUserByEmail(email);
-    //     }
-
-    //     if (!user) {
-    //         throw new UnauthorizedException('Invalid credentials');
-    //     }
-
-    //     const isPasswordValid = await bcrypt.compare(password, user.password);
-    //     if (!isPasswordValid) {
-    //         throw new UnauthorizedException('Invalid credentials');
-    //     }
-
-    //     return user;
-    // }
     private async validateUser(email: string, password: string): Promise<Farmer | Customer> {
-        // Check both Farmer and Customer collections
         let user:any = await this.farmerService.findOneUserByEmail(email);
         if (!user) {
             user = await this.customerService.findOneUserByEmail(email);
@@ -50,23 +29,20 @@ export class AuthService {
             throw new UnauthorizedException('Invalid credentials');
         }
     
-        // Validate the password
         const isPasswordValid = await bcrypt.compare(password, user.password);
         if (!isPasswordValid) {
             throw new UnauthorizedException('Invalid credentials');
         }
     
-        return user; // Return the user with their role
+        return user;
     }
 
     async registerFarmer(registerUserDto: RegisterUserDto): Promise<Farmer> {
-        // Check if farmer already exists
         const farmerExists = await this.farmerService.findOneUserByEmail(registerUserDto.email);
         if (farmerExists) {
             throw new ConflictException('Farmer already exists with this email');
         }
     
-        // Create farmer
         const farmer = await this.farmerService.createFarmer({
             email: registerUserDto.email,
             password: registerUserDto.password,
@@ -77,17 +53,15 @@ export class AuthService {
             bio: registerUserDto.bio
         });
     
-        return farmer; // Return the farmer object
+        return farmer;
     }
     
     async registerCustomer(registerUserDto: RegisterUserDto): Promise<Customer> {
-        // Check if customer already exists
         const customerExists = await this.customerService.findOneUserByEmail(registerUserDto.email);
         if (customerExists) {
             throw new ConflictException('Customer already exists with this email');
         }
     
-        // Create customer
         const customer = await this.customerService.createCustomer({
             email: registerUserDto.email,
             password: registerUserDto.password,
@@ -97,53 +71,33 @@ export class AuthService {
             address: registerUserDto.address
         });
     
-        return customer; // Return the customer object
+        return customer;
     }
 
-    // Login logic based on role (farmer/customer)
-    // async login(email: string, password: string, role: Role): Promise<{ access_token: string }> {
-    //     const user = await this.validateUser (email, password, role);
-    //     const payload = { email: user.email, sub: user._id, role };
-    //     const access_token = await this.jwtService.signAsync(payload);
-    //     return { access_token };
-    // }
-
-    // async login(email: string, password: string, role: Role): Promise<{ access_token: string; user: Farmer | Customer }> {
-    //     const user = await this.validateUser (email, password, role);
-    //     const payload = { email: user.email, sub: user._id, role };
-    //     const access_token = await this.jwtService.signAsync(payload);
-    
-    //     return { access_token, user }; 
-    // }
     async login(email: string, password: string): Promise<{ access_token: string; user: Farmer | Customer }> {
-        const user = await this.validateUser(email, password); // Validate email and password
+        const user = await this.validateUser(email, password);
     
-        // Infer the user's role from the database
         const payload = { email: user.email, sub: user._id, role: user.role };
         const access_token = await this.jwtService.signAsync(payload);
     
-        return { access_token, user }; // Return the token and user
+        return { access_token, user };
     }
 
-    // Logout the user by adding token to blacklist
     async logout(user: any) {
         const token = user.token;
         this.tokenBlacklist.add(token);
         return { message: 'Logged out successfully' };
     }
 
-    // checking the blacklisted tokens
     isTokenBlacklisted(token: string ): boolean {
         return this.tokenBlacklist.has(token);
     }
 
-    // Store OTP for email verification
     async storeOtp(email: string, otp: string) {
         const expires = Date.now() + 300000; // OTP valid for 5 minutes
         this.otpStore[email] = { otp, expires };
     }
 
-    // Verify OTP
     async verifyOtp(email: string, otp: string): Promise<boolean> {
         const record = this.otpStore[email];
         if (!record) {
@@ -160,7 +114,6 @@ export class AuthService {
         return true;
     }
 
-    // Reset password for customer or farmer by email
     async resetPassword(email: string, newPassword: string) {
         const farmer = await this.farmerService.findOneByEmail(email);
         if (farmer) {

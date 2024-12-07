@@ -42,9 +42,8 @@ const ForgotPasswordForm = () => {
         try {
             const response = await api('/auth/forgotPassword', {
                 method: 'POST',
-                body: { email }, // Use the api function
+                body: { email },
             });
-            console.log('OTP sent successfully', response);
             setStep(2); // Move to OTP verification step
         } catch (error) {
             console.error('Error sending OTP', error);
@@ -57,9 +56,8 @@ const ForgotPasswordForm = () => {
         try {
             const response = await api('/auth/verifyOtp', {
                 method: 'POST',
-                body: { email, otp }, // Use the api function
+                body: { email, otp },
             });
-            console.log('OTP verified successfully', response);
             setStep(3);
         } catch (error) {
             console.error('Error verifying OTP', error);
@@ -75,9 +73,8 @@ const ForgotPasswordForm = () => {
         try {
             const response = await api('/auth/resetPassword', {
                 method: 'POST',
-                body: { email, otp, newPassword }, // Include OTP here
+                body: { email, otp, newPassword },
             });
-            console.log('Password reset successfully', response);
             router.push("/login")
         } catch (error) {
             console.error('Error resetting password', error);

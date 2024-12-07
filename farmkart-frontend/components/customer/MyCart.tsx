@@ -34,41 +34,42 @@ export default function MyCart() {
     setError(null);
 
     const orderData = {
-      totalPrice,
-      estimatedDeliveryDate: new Date(new Date().setDate(new Date().getDate() + 5)),
-      paymentMethod,
-      transactionId: generateTransactionId(), 
-      products: cart.map(({ product, quantity }) => ({
-        product: product._id,
-        quantity,
-      })),
-      status: 'pending',
-      paymentStatus: paymentMethod === 'cashondelivery' ? 'pending' : 'completed',
+        totalPrice,
+        estimatedDeliveryDate: new Date(new Date().setDate(new Date().getDate() + 5)), // Ensure this is a Date object
+        paymentMethod,
+        transactionId: generateTransactionId(), 
+        products: cart.map(({ product, quantity }) => ({
+            product: product._id,
+            quantity,
+            farmer: product.farmer
+        })),
+        status: 'pending',
+        paymentStatus: paymentMethod === 'cashondelivery' ? 'pending' : 'completed',
     };
 
     try {
-      const createdOrder = await api('/order', {
-        method: 'POST',
-        body: orderData,
-      });
+        const createdOrder = await api('/order', {
+            method: 'POST',
+            body: orderData,
+        });
 
-      toast.success('Your Order has been placed!', {
-        style: {
-          borderRadius: '8px',
-          background: '#16a34a',
-          color: '#fff',
-        },
-      });
-      clearCart();
-      setIsDialogOpen(false);
-      router.push('/myorder');
+        toast.success('Your Order has been placed!', {
+            style: {
+                borderRadius: '8px',
+                background: '#16a34a',
+                color: '#fff',
+            },
+        });
+        clearCart();
+        setIsDialogOpen(false);
+        router.push('/myorder');
     } catch (err: any) {
-      console.error('Error placing order:', err);
-      setError(err.message || 'Failed to place order. Please try again.');
+        console.error('Error placing order:', err);
+        setError(err.message || 'Failed to place order. Please try again.');
     } finally {
-      setIsLoading(false);
+        setIsLoading(false);
     }
-  };
+};
 
   return (
     <div className="p-6 bg-gray-50 shadow-xl rounded-lg max-w-3xl mx-auto mt-24">

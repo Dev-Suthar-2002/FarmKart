@@ -7,10 +7,9 @@ interface InputFieldProps {
     name?: string;
     placeholder?: string;
     error?: string;
-    value?: string; // Add value prop
-    onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void; // Add onChange prop
+    value?: string;
+    onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
     required?: boolean;
-    // Additional props can be added as needed
 }
 
 const Input = forwardRef<HTMLInputElement, InputFieldProps>(({ type = 'text', id, name, placeholder, error, value, required, onChange, ...rest }, ref) => (
@@ -20,17 +19,17 @@ const Input = forwardRef<HTMLInputElement, InputFieldProps>(({ type = 'text', id
             id={id}
             name={name}
             placeholder={placeholder}
-            ref={ref} // Forward the ref
-            value={value} // Set the value prop
+            ref={ref}
+            value={value}
             required={required}
-            onChange={onChange} // Set the onChange prop
+            onChange={onChange}
             className="block w-full border border-gray-300 rounded-lg p-3 focus:outline-none focus:ring-4 focus:ring-blue-400"
-            {...rest} // Spread the rest of the props
+            {...rest}
         />
         {error && <p className="text-red-500">{error}</p>}
     </div>
 ));
 
-Input.displayName = 'Input'; // Set a display name for debugging
+Input.displayName = 'Input';
 
 export default Input;

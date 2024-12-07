@@ -45,8 +45,8 @@ const ProfileForm = ({ user }: ProfileFormProps) => {
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        setErrors({ name: '', email: '', phone: '', address: '' }); // Reset errors
-        setSuccessMessage(''); // Reset success message
+        setErrors({ name: '', email: '', phone: '', address: '' });
+        setSuccessMessage('');
 
         if (!formData.name || !formData.phone || !formData.address) {
             setErrors((prev) => ({
@@ -62,7 +62,7 @@ const ProfileForm = ({ user }: ProfileFormProps) => {
         const token = localStorage.getItem('access_token') || '';
 
         console.log('Sending data:', formData);
-        console.log('Using token:', token); // Log the token
+        console.log('Using token:', token);
 
         try {
             const response = await api(apiUrl, {
@@ -103,6 +103,7 @@ const ProfileForm = ({ user }: ProfileFormProps) => {
                         onChange={handleChange}
                         error={errors.name}
                     />
+
                     <Input
                         type="email"
                         id="email"
@@ -112,6 +113,7 @@ const ProfileForm = ({ user }: ProfileFormProps) => {
                         onChange={handleChange}
                         error={errors.email}
                     />
+
                     <Input
                         type="tel"
                         id="phone"
@@ -121,6 +123,7 @@ const ProfileForm = ({ user }: ProfileFormProps) => {
                         onChange={handleChange}
                         error={errors.phone}
                     />
+
                     <Input
                         type="text"
                         id="address"
@@ -130,6 +133,7 @@ const ProfileForm = ({ user }: ProfileFormProps) => {
                         onChange={handleChange}
                         error={errors.address}
                     />
+                    
                     <div className="flex items-center">
                         <label className="mr-4">Role:</label>
                         <span className="border border-gray-300 rounded-lg p-2">{formData.role}</span> {/* Read-only role field */}

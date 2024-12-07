@@ -42,7 +42,7 @@ export default function RootLayout({
             <Navbar />
 
             {/* Main content */}
-            <main className="flex-grow">
+            <main className="flex-grow pt-16">
               <Toaster />
               {children}
             
