@@ -89,8 +89,8 @@ const ManageOrders: React.FC = () => {
                                     <td className="px-4 py-2 text-sm text-gray-600">
                                         <ul className="list-disc pl-5">
                                             {order.products.map((product) => (
-                                                <li key={product.product._id.toString()}>
-                                                    {product.product.name} (Quantity: {product.quantity})
+                                                <li key={product.product._id.toString() || "Unknown"}>
+                                                    {product.product?.name || "Unknown"} (Quantity: {product.quantity || "unkmown"})
                                                 </li>
                                             ))}
                                         </ul>

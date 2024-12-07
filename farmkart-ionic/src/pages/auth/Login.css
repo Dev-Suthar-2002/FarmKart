@@ -1,0 +1,97 @@
+.auth-page {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh; /* Full viewport height */
+  background: linear-gradient(135deg, #e0f7fa, #b2dfdb); /* Modern gradient background */
+  padding: 1rem; /* Padding to prevent content from being flush with the edges on smaller screens */
+  box-sizing: border-box;
+}
+
+.auth-container {
+  width: 100%;
+  max-width: 400px; /* Constrain to a maximum width */
+  padding: 2rem;
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15); /* Pronounced shadow */
+  text-align: center;
+  transition: transform 0.3s, box-shadow 0.3s; /* Smooth hover effects */
+}
+
+.auth-container:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+}
+
+.auth-title {
+  font-size: 2rem; /* Adjusted for better responsiveness */
+  font-weight: 800; /* Extra bold */
+  color: #004d40; /* Darker green for better contrast */
+  margin-bottom: 1.5rem;
+}
+
+.auth-form {
+  margin-top: 1rem;
+}
+
+.auth-error {
+  color: #d32f2f; /* Modern red */
+  font-size: 0.9rem;
+  margin-top: 0.5rem;
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+.auth-forgot-password {
+  margin-top: 1rem;
+  font-size: 0.9rem;
+  color: #0288d1; /* Bright blue */
+  cursor: pointer;
+  transition: color 0.2s;
+}
+
+.auth-forgot-password:hover {
+  color: #01579b; /* Darker blue */
+  text-decoration: underline;
+}
+
+.auth-button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  margin-top: 1.5rem;
+  padding: 0.75rem;
+  font-size: 1rem;
+  font-weight: bold;
+  color: white;
+  background: linear-gradient(135deg, #388e3c, #2e7d32); /* Vibrant green gradient */
+  border-radius: 12px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Subtle button shadow */
+  transition: background 0.3s, transform 0.2s, box-shadow 0.2s;
+}
+
+.auth-button:hover {
+  background: linear-gradient(135deg, #4caf50, #43a047); /* Slightly brighter green */
+  transform: translateY(-3px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+}
+
+@media (max-width: 600px) {
+  .auth-container {
+    padding: 1.5rem; /* Adjust padding for smaller screens */
+  }
+
+  .auth-title {
+    font-size: 1.8rem; /* Slightly smaller title on mobile */
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}

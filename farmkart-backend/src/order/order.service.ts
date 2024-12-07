@@ -53,15 +53,16 @@ export class OrderService {
         .exec();
 
     const filteredOrders = orders.map(order => {
-        const filteredProducts = order.products.filter(
-            product =>
-                product.farmer === farmerId.toString() &&
-                typeof product.product !== 'string'
-        );
+        const filteredProducts = order.products.filter(product => {
+            return product.farmer === farmerId.toString() && product.product && typeof product.product !== 'string';
+        });
 
         const recalculatedTotalPrice = filteredProducts.reduce((total, product) => {
-            const productData = product.product as unknown as Product;
-            return total + productData.price * product.quantity;
+            if (product.product) {
+                const productData = product.product as unknown as Product;
+                return total + productData.price * product.quantity;
+            }
+            return total;
         }, 0);
 
         return {
