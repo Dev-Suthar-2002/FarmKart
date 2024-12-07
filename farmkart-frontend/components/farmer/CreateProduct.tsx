@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from "react";
-import api from "@/lib/api"; // Adjust the import path as necessary
+import api from "@/lib/api";
 import { Product } from "./ProductList";
 import Input  from "@/components/shared/Input";
 import Button from "../shared/Button";
 
 interface CreateProductProps {
-  onProductChange: (product: Product) => void; // Callback to notify parent of product changes
-  selectedProduct: Product | null; // The product to edit, if any
+  onProductChange: (product: Product) => void;
+  selectedProduct: Product | null;
 }
 
 export default function CreateProduct({ onProductChange, selectedProduct }: CreateProductProps) {
@@ -20,7 +20,7 @@ export default function CreateProduct({ onProductChange, selectedProduct }: Crea
     category: "",
     imageUrl: null as string | null,
   });
-  const [isUpdating, setIsUpdating] = useState(false); // State to track if we are updating
+  const [isUpdating, setIsUpdating] = useState(false);
 
   useEffect(() => {
     const token = localStorage.getItem("access_token");
@@ -44,7 +44,8 @@ export default function CreateProduct({ onProductChange, selectedProduct }: Crea
         category: selectedProduct.category,
         imageUrl: selectedProduct.imageUrl,
       });
-      setIsUpdating(true); // Set updating state to true
+
+      setIsUpdating(true); 
     } else {
       setFormData({
         name: "",
@@ -54,7 +55,7 @@ export default function CreateProduct({ onProductChange, selectedProduct }: Crea
         category: "",
         imageUrl: null,
       });
-      setIsUpdating(false); // Reset updating state
+      setIsUpdating(false); 
     }
   }, [selectedProduct]);
 
@@ -95,7 +96,6 @@ export default function CreateProduct({ onProductChange, selectedProduct }: Crea
       let newProduct: Product;
 
       if (isUpdating && selectedProduct) {
-        // Update existing product
         newProduct = await api(`/product/${selectedProduct._id}`, {
           method: "PATCH",
           body: productData,
@@ -103,7 +103,6 @@ export default function CreateProduct({ onProductChange, selectedProduct }: Crea
         });
         alert("Product updated successfully!");
       } else {
-        // Create new product
         newProduct = await api("/product", {
           method: "POST",
           body: productData,
@@ -112,9 +111,8 @@ export default function CreateProduct({ onProductChange, selectedProduct }: Crea
         alert("Product created successfully!");
       }
 
-      onProductChange(newProduct); // Notify parent of the new or updated product
+      onProductChange(newProduct);
 
-      // Reset form data and state
       setFormData({
         name: "",
         description: "",
@@ -123,7 +121,8 @@ export default function CreateProduct({ onProductChange, selectedProduct }: Crea
         category: "",
         imageUrl : null,
       });
-      setIsUpdating(false); // Reset updating state
+
+      setIsUpdating(false);
     } catch (error) {
       console.error("Error saving product:", error);
       alert("Failed to save product. Please try again.");
@@ -133,9 +132,6 @@ export default function CreateProduct({ onProductChange, selectedProduct }: Crea
   return (
     <div className="container mx-auto p-4">
       <h1 className="text-2xl font-bold mb-4">{isUpdating ? "Update Product" : "Create Product"}</h1>
-      {/* {isUpdating && formData.imageUrl && (
-        <img src={formData.imageUrl} alt="Current Product" className="mb-4 h-48 w-full object-cover rounded" />
-      )} */}
       <form onSubmit={handleSubmit} className="space-y-4">
         <Input
           type="text"
@@ -145,6 +141,7 @@ export default function CreateProduct({ onProductChange, selectedProduct }: Crea
           onChange={handleChange}
           required
         />
+
         <textarea
           name="description"
           placeholder="Product Description"
@@ -153,6 +150,7 @@ export default function CreateProduct({ onProductChange, selectedProduct }: Crea
           required
           className="border p-2 w-full"
         />
+
         <Input
           type="number"
           name="price"
@@ -161,6 +159,7 @@ export default function CreateProduct({ onProductChange, selectedProduct }: Crea
           onChange={handleChange}
           required
         />
+
         <Input
           type="number"
           name="stock"
@@ -169,6 +168,7 @@ export default function CreateProduct({ onProductChange, selectedProduct }: Crea
           onChange={handleChange}
           required
         />
+
         <Input
           type="text"
           name="category"
@@ -177,11 +177,13 @@ export default function CreateProduct({ onProductChange, selectedProduct }: Crea
           onChange={handleChange}
           required
         />
+
         <Input
           type="file"
           name="imageUrl"
           onChange={handleFileChange}
         />
+        
         <Button type="submit" className="bg-green-600 text-white py-2 px-4 rounded hover:bg-green-800">
           {isUpdating ? "Update" : "Submit"}
         </Button>

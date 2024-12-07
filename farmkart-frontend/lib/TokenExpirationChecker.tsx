@@ -1,6 +1,5 @@
 'use client';
 
-import { useEffect } from 'react';
 import useTokenExpiration from './TokenExpiration';
 
 const TokenExpirationChecker = () => {

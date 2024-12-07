@@ -3,68 +3,80 @@
 import React, { useState } from 'react';
 import { useCart } from '@/lib/CartContext';
 import { useRouter } from 'next/navigation';
-import api from '@/lib/api'; // Import the custom API utility
+import api from '@/lib/api';
 import toast from 'react-hot-toast';
 import Button from '../shared/Button';
 
 export default function MyCart() {
   const { cart, updateQuantity, removeFromCart, clearCart } = useCart();
   const [isLoading, setIsLoading] = useState(false);
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
+  const [paymentMethod, setPaymentMethod] = useState('cashondelivery');
   const [error, setError] = useState<string | null>(null);
   const router = useRouter();
 
-
-  // Calculate total price
   const totalPrice = cart.reduce((total, item) => total + item.product.price * item.quantity, 0);
+
+  const paymentoptions = [
+    {value: "cashondelivery", label: "Cash On Delivery"},
+    {value: "creditcard", label: "Credit Card"},
+    {value: "debitcard", label: "Debit Card"},
+    {value: "paypal", label:"Pay Pal"}
+  ]
+
+  // Function to generate a random transaction ID
+  const generateTransactionId = () => {
+    return `TXN-${Date.now()}-${Math.floor(1000 + Math.random() * 9000)}`;
+  };
 
   const handlePlaceOrder = async () => {
     setIsLoading(true);
     setError(null);
 
     const orderData = {
-      totalPrice,
-      estimatedDeliveryDate: new Date(new Date().setDate(new Date().getDate() + 5)), // Example: 5 days from now
-      paymentMethod: 'cashondelivery', // Replace with actual customer ID from context/auth
-      products: cart.map(({ product, quantity }) => ({
-        product: product._id,
-        quantity,
-      })),
-      status: 'pending',
-      paymentStatus: 'pending',
+        totalPrice,
+        estimatedDeliveryDate: new Date(new Date().setDate(new Date().getDate() + 5)), // Ensure this is a Date object
+        paymentMethod,
+        transactionId: generateTransactionId(), 
+        products: cart.map(({ product, quantity }) => ({
+            product: product._id,
+            quantity,
+            farmer: product.farmer
+        })),
+        status: 'pending',
+        paymentStatus: paymentMethod === 'cashondelivery' ? 'pending' : 'completed',
     };
 
     try {
-      // Use the custom API utility
-      const createdOrder = await api('/order', {
-        method: 'POST',
-        body: orderData,
-    
-      });
+        const createdOrder = await api('/order', {
+            method: 'POST',
+            body: orderData,
+        });
 
-      toast.success(`Your Order has been placed!`, {
-        style: {
-          borderRadius: "8px",
-          background: "#16a34a",
-          color: "#fff",
-        }
-      });
-      clearCart(); // Clear the cart after successful order placement
-      router.push('/myorder'); // Navigate to My Orders page
+        toast.success('Your Order has been placed!', {
+            style: {
+                borderRadius: '8px',
+                background: '#16a34a',
+                color: '#fff',
+            },
+        });
+        clearCart();
+        setIsDialogOpen(false);
+        router.push('/myorder');
     } catch (err: any) {
-      console.error('Error placing order:', err);
-      setError(err.message || 'Failed to place order. Please try again.');
+        console.error('Error placing order:', err);
+        setError(err.message || 'Failed to place order. Please try again.');
     } finally {
-      setIsLoading(false);
+        setIsLoading(false);
     }
-  };
+};
 
   return (
-    <div className="p-6 bg-white shadow-xl rounded-lg max-w-3xl mx-auto mt-12">
-      <h2 className="text-3xl font-extrabold text-gray-800 mb-6 flex justify-center">
-        Your <span className="text-green-600 ml-2">Cart</span>
+    <div className="p-6 bg-gray-50 shadow-xl rounded-lg max-w-3xl mx-auto mt-24">
+      <h2 className="text-3xl font-extrabold text-gray-800 mb-6 text-center">
+        Your <span className="text-green-600">Cart</span>
       </h2>
 
-      {/* Display error if any */}
       {error && <p className="text-red-500 bg-red-100 p-4 rounded mb-4">{error}</p>}
 
       {cart.length === 0 ? (
@@ -73,12 +85,15 @@ export default function MyCart() {
         <>
           <div className="divide-y divide-gray-200">
             {cart.map(({ product, quantity }) => (
-              <div key={product._id} className="flex items-center justify-between py-4">
+              <div
+                key={product._id}
+                className="flex items-center justify-between py-4 transition hover:bg-gray-100 rounded-lg"
+              >
                 <div className="flex items-center gap-4">
                   <img
                     src={product.imageUrl || '/placeholder.jpg'}
                     alt={product.name}
-                    className="w-16 h-16 rounded object-cover"
+                    className="w-16 h-16 rounded-lg object-cover border border-gray-200"
                   />
                   <div>
                     <h3 className="text-lg font-semibold text-gray-800">{product.name}</h3>
@@ -88,20 +103,22 @@ export default function MyCart() {
                 <div className="flex items-center gap-2">
                   <Button
                     onClick={() => updateQuantity(product._id, Math.max(1, quantity - 1))}
-                    className="w-8 h-8 flex items-center justify-center text-gray-700 bg-gray-100 hover:bg-gray-200 rounded-full"
+                    className="w-8 h-8 flex items-center justify-center text-white bg-gray-700 hover:bg-gray-900 rounded-md font-bold shadow-md transition-all"
                   >
                     -
                   </Button>
-                  <span className="text-lg font-medium text-gray-800">{quantity}</span>
+                  <span className="text-lg font-medium text-gray-800 bg-gray-200 px-3 py-1 rounded-md shadow-sm">
+                    {quantity}
+                  </span>
                   <Button
                     onClick={() => updateQuantity(product._id, quantity + 1)}
-                    className="w-8 h-8 flex items-center justify-center text-gray-700 bg-gray-100 hover:bg-gray-200 rounded-full"
+                    className="w-8 h-8 flex items-center justify-center text-white bg-gray-700 hover:bg-gray-900 rounded-md font-bold shadow-md transition-all"
                   >
                     +
                   </Button>
                   <Button
                     onClick={() => removeFromCart(product._id)}
-                    className="text-red-500 hover:text-red-700 hover:underline text-sm ml-4"
+                    className="text-white bg-red-500 hover:bg-red-600 px-3 py-1 rounded-md shadow-md transition-all"
                   >
                     Remove
                   </Button>
@@ -110,24 +127,67 @@ export default function MyCart() {
             ))}
           </div>
 
-          {/* Total Price */}
           <div className="text-right mt-6 border-t border-gray-200 pt-4">
-            <p className="text-xl font-bold text-gray-800">Total: ${totalPrice.toFixed(2)}</p>
+            <p className="text-xl font-bold text-gray-800">
+              Total: <span className="text-green-600">${totalPrice.toFixed(2)}</span>
+            </p>
           </div>
 
-          {/* Place Order Button */}
           <Button
-            onClick={handlePlaceOrder}
-            disabled={isLoading}
-            className={`mt-6 w-full text-lg font-medium px-6 py-3 rounded-lg shadow-md transition ${
-              isLoading
-                ? 'bg-green-400 cursor-not-allowed'
-                : 'bg-green-600 hover:bg-green-700 text-white'
-            }`}
+            onClick={() => setIsDialogOpen(true)}
+            className="mt-6 w-full text-lg font-medium px-6 py-3 rounded-lg shadow-md bg-green-600 hover:bg-green-700 text-white"
           >
-            {isLoading ? 'Placing Order...' : 'Place Order'}
+            Place Order
           </Button>
         </>
+      )}
+
+      {isDialogOpen && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+          <div className="bg-white p-6 rounded-lg shadow-xl w-96">
+            <h3 className="text-lg font-bold text-gray-800 mb-4">Order Summary</h3>
+            <ul className="mb-4">
+              {cart.map(({ product, quantity }) => (
+                <li key={product._id} className="flex justify-between mb-2">
+                  <span>{product.name} x {quantity}</span>
+                  <span>${(product.price * quantity).toFixed(2)}</span>
+                </li>
+              ))}
+            </ul>
+            <p className="text-lg font-semibold text-gray-800 mb-4">
+              Total: <span className="text-green-600">${totalPrice.toFixed(2)}</span>
+            </p>
+            <div className="mb-4">
+              <label className="block text-sm font-medium text-gray-700 mb-1">
+                Payment Method
+              </label>
+              <select
+                className="w-full border-gray-300 rounded-md shadow-sm"
+                value={paymentMethod}
+                onChange={(e) => setPaymentMethod(e.target.value)}
+              >
+                {paymentoptions.map((option)=>(
+                  <option key={option.value} value={option.value}>{option.value}</option>
+                ))}             
+              </select>
+            </div>
+            <div className="flex gap-4">
+              <Button
+                onClick={handlePlaceOrder}
+                disabled={isLoading}
+                className="w-full text-lg font-medium px-4 py-2 rounded-lg shadow-md bg-green-600 hover:bg-green-700 text-white"
+              >
+                {isLoading ? 'Placing Order...' : 'Confirm'}
+              </Button>
+              <Button
+                onClick={() => setIsDialogOpen(false)}
+                className="w-full text-lg font-medium px-4 py-2 rounded-lg shadow-md bg-gray-200 hover:bg-gray-300"
+              >
+                Cancel
+              </Button>
+            </div>
+          </div>
+        </div>
       )}
     </div>
   );

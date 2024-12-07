@@ -3,7 +3,7 @@ import { AuthService } from './auth.service';
 import { JwtAuthGuard } from './guard/auth.guard';
 import { Request } from 'express';
 import { MailService } from './mail.service';
-import { LoginDto,ResetPasswordDto,ForgotPasswordDto } from './dto/auth.dto.';
+import { LoginDto, ResetPasswordDto, ForgotPasswordDto } from './dto/auth.dto.';
 import { Role } from './role.enum';
 import { RegisterUserDto } from './dto/register-user.dto';
 
@@ -13,7 +13,7 @@ export class AuthController {
     constructor(
         private readonly authService: AuthService,
         private readonly mailService: MailService,
-    ) {}
+    ) { }
 
     @HttpCode(HttpStatus.OK)
     @Post('login')
@@ -24,7 +24,6 @@ export class AuthController {
     @HttpCode(HttpStatus.CREATED)
     @Post('register')
     async register(@Body() registerUserDto: RegisterUserDto) {
-        console.log('Register request received with data:', registerUserDto);
         if (registerUserDto.role === Role.FARMER) {
             return this.authService.registerFarmer(registerUserDto);
         } else if (registerUserDto.role === Role.CUSTOMER) {
@@ -37,7 +36,7 @@ export class AuthController {
     @UseGuards(JwtAuthGuard)
     @Get('protected')
     async getHello(@Req() req: Request) {
-        return req.user; // Return the user object from the request
+        return req.user;
     }
 
     @UseGuards(JwtAuthGuard)
@@ -51,7 +50,7 @@ export class AuthController {
     @Post('forgotPassword')
     async forgotPassword(@Body() forgotPasswordDto: ForgotPasswordDto) {
         const { email } = forgotPasswordDto;
-        const otp = Math.floor(100000 + Math.random() * 900000).toString(); // Generate a 6-digit OTP
+        const otp = Math.floor(100000 + Math.random() * 900000).toString();
         await this.mailService.sendOtp(email, otp);
         await this.authService.storeOtp(email, otp);
         return { message: 'OTP sent to your email' };
@@ -66,7 +65,7 @@ export class AuthController {
     @Post('resetPassword')
     async resetPassword(@Body() resetPasswordDto: ResetPasswordDto) {
         const { email, otp, newPassword } = resetPasswordDto;
-        await this.authService.verifyOtp(email, otp); 
+        await this.authService.verifyOtp(email, otp);
         await this.authService.resetPassword(email, newPassword);
         return { message: 'Password has been reset successfully' };
     }

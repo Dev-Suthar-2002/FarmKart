@@ -4,19 +4,7 @@ import { useState, useEffect } from "react";
 import ProductCard from "@/components/customer/ProductCard";
 import ProductFilter from "@/components/customer/ProductFilter";
 import api from "@/lib/api";
-
-interface Product {
-  _id: string;
-  name: string;
-  description: string;
-  price: number;
-  stock: number;
-  category: string;
-  imageUrl?: string;
-  farmer: {
-    name: string;
-  };
-}
+import { Product } from "@/lib/CartContext";
 
 export default function ProductsPage() {
   const [products, setProducts] = useState<Product[]>([]);
@@ -57,10 +45,13 @@ export default function ProductsPage() {
 
   return (
     <section className="bg-gray-50">
-      <div className="container mx-auto px-6 lg:px-12 py-12">
+      {/* Adjust for fixed navbar */}
+      <div className="container mx-auto px-6 lg:px-12 py-12 mt-[80px] lg:mt-[80px]">
         {/* Page Header */}
         <div className="mb-8 text-center">
-          <h1 className="text-3xl font-bold text-gray-800">Explore Our <span className="text-green-700">Products</span></h1>
+          <h1 className="text-3xl font-bold text-gray-800">
+            Explore Our <span className="text-green-700">Products</span>
+          </h1>
           <p className="text-lg text-gray-600 mt-2">
             Find the best products tailored to your needs.
           </p>
@@ -69,7 +60,9 @@ export default function ProductsPage() {
         {/* Loading State */}
         {loading && (
           <div className="text-center mt-10">
-            <p className="text-lg font-medium text-gray-600">Loading products...</p>
+            <p className="text-lg font-medium text-gray-600">
+              Loading products...
+            </p>
           </div>
         )}
 
@@ -108,5 +101,3 @@ export default function ProductsPage() {
     </section>
   );
 }
-
-

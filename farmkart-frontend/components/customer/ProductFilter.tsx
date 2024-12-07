@@ -1,18 +1,6 @@
 import { useState, useEffect, useMemo } from "react";
 import Input from "../shared/Input";
-
-interface Product {
-  _id: string;
-  name: string;
-  description: string;
-  price: number;
-  stock: number;
-  category: string;
-  imageUrl?: string;
-  farmer: {
-    name: string;
-  };
-}
+import { Product } from "@/lib/CartContext";
 
 interface ProductFilterProps {
   products: Product[];

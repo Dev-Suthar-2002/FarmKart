@@ -52,22 +52,14 @@ export class ProductController {
     @UseGuards(JwtAuthGuard)
     @Delete(':id')
     async remove(@Param('id') id: string, @Request() payload): Promise<Product[]> {
-        console.log("id", id);
 
-        // Find the product by ID
         const product = await this.productService.findOne(id);
         const farmerId = payload.user._id;
 
-        console.log("farmerId", farmerId.toString());
-        console.log("product farmerId", product.farmer._id.toString());
-
-        // Check if the farmer is authorized to delete the product
         if (product.farmer._id.toString() !== farmerId.toString()) {
-            console.log("Error: Unauthorized deletion attempt");
             throw new NotFoundException(`You are not allowed to delete this product`);
         }
 
-        // Call deleteProduct and return the remaining products
         return this.productService.deleteProduct(id);
     }
 }

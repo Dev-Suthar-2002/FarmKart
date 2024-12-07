@@ -7,12 +7,12 @@ export class MailService {
 
     constructor() {
         this.transporter = createTransport({
-            host: process.env.SMTP_HOST, // e.g., smtp.gmail.com
-            port: Number(process.env.SMTP_PORT), // e.g., 587
-            secure: false, // true for 465, false for other ports
+            host: process.env.SMTP_HOST,
+            port: Number(process.env.SMTP_PORT),
+            secure: false,
             auth: {
-                user: process.env.SMTP_USER, // your email
-                pass: process.env.SMTP_PASS, // your email password or app password
+                user: process.env.SMTP_USER,
+                pass: process.env.SMTP_PASS,
             },
         });
     }

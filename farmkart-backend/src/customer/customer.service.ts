@@ -10,9 +10,8 @@ import * as bcrypt from 'bcrypt';
 export class CustomerService {
     constructor(
         @InjectModel(Customer.name) private customerModel: Model<CustomerDocument>,
-    ) {}
+    ) { }
 
-    // Create a new customer
     async createCustomer(createCustomerDto: CreateCustomerDto): Promise<CustomerDocument> {
         const existingCustomer = await this.customerModel.findOne({ email: createCustomerDto.email }).exec();
         if (existingCustomer) {
@@ -20,17 +19,15 @@ export class CustomerService {
         }
 
         const hashedPassword = await bcrypt.hash(createCustomerDto.password, 10);
-        
         const createdCustomer = new this.customerModel({ ...createCustomerDto, password: hashedPassword });
-        return createdCustomer.save(); 
+
+        return createdCustomer.save();
     }
 
-    // Find all customers
     async findAll(): Promise<Customer[]> {
         return this.customerModel.find().populate('orders').exec();
     }
 
-    // Find a customer by ID
     async findOne(id: string): Promise<CustomerDocument> {
         const customer = await this.customerModel.findById(id).populate('orders').exec();
 
@@ -56,12 +53,10 @@ export class CustomerService {
         }
     }
 
-    // Update a customer
     async updateCustomer(id: string, updateCustomerDto: UpdateCustomerDto): Promise<CustomerDocument> {
-        const hashedPassword = await bcrypt.hash(updateCustomerDto.password, 10);
         const updatedCustomer = await this.customerModel.findByIdAndUpdate(
             id,
-            { ...updateCustomerDto, password: hashedPassword },
+            { ...updateCustomerDto },
             { new: true }
         ).exec();
 
@@ -72,7 +67,6 @@ export class CustomerService {
         return updatedCustomer;
     }
 
-    // Delete a customer
     async deleteCustomer(id: string): Promise<void> {
         const result = await this.customerModel.findByIdAndDelete(id).exec();
         if (!result) {

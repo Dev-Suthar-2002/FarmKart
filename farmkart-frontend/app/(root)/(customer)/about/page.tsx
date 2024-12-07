@@ -6,7 +6,7 @@ const AboutUs = () => {
   return (
     <div className="min-h-screen bg-gray-50">
       {/* Hero Section */}
-      <div className="bg-green-600 text-white py-16 px-6 text-center">
+      <div className="bg-green-600 text-white py-16 px-6 text-center mt-[80px] lg:mt-[80px]">
         <h1 className="text-4xl font-extrabold mb-4">About Us</h1>
         <p className="text-lg">
           Discover who we are, what drives us, and why we’re committed to delivering the best.
@@ -17,7 +17,9 @@ const AboutUs = () => {
       <section className="container mx-auto px-6 py-12">
         <div className="flex flex-col md:flex-row items-center gap-8">
           <div className="w-full md:w-1/2">
-            <h2 className="text-3xl font-bold text-gray-800 mb-4">Our <span className='text-green-600'>Story</span></h2>
+            <h2 className="text-3xl font-bold text-gray-800 mb-4">
+              Our <span className="text-green-600">Story</span>
+            </h2>
             <p className="text-gray-600">
               Founded with a passion for sustainable farming, we aim to connect farmers and
               consumers in a way that promotes healthy living and environmental stewardship.
@@ -40,14 +42,18 @@ const AboutUs = () => {
         <div className="container mx-auto px-6 text-center">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
             <div>
-              <h3 className="text-2xl font-bold text-gray-800 mb-4"> Our <span className='text-green-600'> Mission </span></h3>
+              <h3 className="text-2xl font-bold text-gray-800 mb-4">
+                Our <span className="text-green-600">Mission</span>
+              </h3>
               <p className="text-gray-600">
                 To deliver fresh, organic, and sustainable products while empowering local
                 farmers and fostering healthier communities.
               </p>
             </div>
             <div>
-              <h3 className="text-2xl font-bold text-gray-800 mb-4">Our <span className='text-green-600'>Vision</span></h3>
+              <h3 className="text-2xl font-bold text-gray-800 mb-4">
+                Our <span className="text-green-600">Vision</span>
+              </h3>
               <p className="text-gray-600">
                 To create a world where every meal contributes to the well-being of people and
                 the planet.
@@ -60,33 +66,31 @@ const AboutUs = () => {
       {/* Meet the Team Section */}
       <section className="flex flex-col items-center container mx-auto px-6 py-12">
         <h2 className="text-3xl font-bold text-center text-gray-800 mb-8">
-            Meet Our <span className="text-green-600">Team</span>
+          Meet Our <span className="text-green-600">Team</span>
         </h2>
-        
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 gap-8">
-            {/* Example Team Member */}
-            <div className="text-center">
-                <img
-                    src="/pexels-jakeheinemann-1482101.jpg"
-                    alt="Team Member"
-                    className="w-32 h-32 mx-auto rounded-full shadow-lg mb-4"
+          {/* Example Team Member */}
+          <div className="text-center">
+            <img
+              src="/pexels-jakeheinemann-1482101.jpg"
+              alt="Team Member"
+              className="w-32 h-32 mx-auto rounded-full shadow-lg mb-4"
             />
             <h3 className="text-lg font-bold text-gray-800">Dev Suthar</h3>
             <p className="text-gray-600">CEO & Founder</p>
-        </div>
-    
-        <div className="text-center">
+          </div>
+
+          <div className="text-center">
             <img
-                src="/pexels-jakeheinemann-1482101.jpg"
-                alt="Team Member"
-                className="w-32 h-32 mx-auto rounded-full shadow-lg mb-4"
+              src="/pexels-jakeheinemann-1482101.jpg"
+              alt="Team Member"
+              className="w-32 h-32 mx-auto rounded-full shadow-lg mb-4"
             />
             <h3 className="text-lg font-bold text-gray-800">Jay Shah</h3>
             <p className="text-gray-600">CEO & Founder</p>
+          </div>
         </div>
-        </div>
-       </section>
-
+      </section>
 
       {/* Values Section */}
       <section className="bg-green-600 text-white py-16 px-6">

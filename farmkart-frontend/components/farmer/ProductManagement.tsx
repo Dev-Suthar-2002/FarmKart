@@ -5,22 +5,22 @@ import CreateProduct from './CreateProduct';
 
 const ProductManagement = () => {
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
-  const [products, setProducts] = useState<Product[]>([]); // State to hold the list of products
+  const [products, setProducts] = useState<Product[]>([]);
 
   const handleProductChange = (newProduct: Product) => {
     setProducts((prevProducts) => {
       const existingProductIndex = prevProducts.findIndex(p => p._id === newProduct._id);
       if (existingProductIndex > -1) {
-        // If the product already exists, replace it
+
         const updatedProducts = [...prevProducts];
         updatedProducts[existingProductIndex] = newProduct;
         return updatedProducts;
       } else {
-        // If it's a new product, add it to the list
+
         return [...prevProducts, newProduct];
       }
     });
-    setSelectedProduct(null); // Reset selected product after creation or update
+    setSelectedProduct(null);
   };
 
   const handleEditProduct = (product: Product) => {

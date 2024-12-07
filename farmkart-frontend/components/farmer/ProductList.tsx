@@ -3,7 +3,7 @@ import api from "@/lib/api";
 import ProductCard from "./ProductCard";
 
 interface Farmer {
-  _id: string; // Assuming the farmer has an ID
+  _id: string;
   name: string;
 }
 
@@ -20,7 +20,7 @@ export interface Product {
 
 interface ProductListProps {
   products: Product[];
-  onEditProduct: (product: Product) => void; // Callback to handle editing
+  onEditProduct: (product: Product) => void;
 }
 
 export default function ProductList({ products, onEditProduct }: ProductListProps) {
@@ -31,10 +31,9 @@ export default function ProductList({ products, onEditProduct }: ProductListProp
     const accessToken = localStorage.getItem("access_token");
     if (accessToken) {
       const decodedToken = JSON.parse(atob(accessToken.split('.')[1]));
-      const farmerId = decodedToken.sub; // Assuming 'sub' contains the farmer ID
+      const farmerId = decodedToken.sub;
       setFarmerId(farmerId);
 
-      // Filter products based on the farmer ID
       const farmerProducts = products.filter(product => product.farmer && product.farmer._id === farmerId);
       setFilteredProducts(farmerProducts);
     }
@@ -55,7 +54,7 @@ export default function ProductList({ products, onEditProduct }: ProductListProp
   };
 
   const handleEditProduct = (product: Product) => {
-    onEditProduct(product); // Call the passed down function to handle editing
+    onEditProduct(product);
   };
 
   return (
@@ -65,7 +64,7 @@ export default function ProductList({ products, onEditProduct }: ProductListProp
           key={product._id}
           product={product}
           onDelete={handleDelete}
-          onEdit={handleEditProduct} // Pass the handleEditProduct function
+          onEdit={handleEditProduct}
         />
       ))}
     </div>

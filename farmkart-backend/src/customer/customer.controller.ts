@@ -5,8 +5,6 @@ import { UpdateCustomerDto } from './dto/update-customer.dto';
 import { Customer } from './customer.schema';
 import { JwtAuthGuard } from 'src/auth/guard/auth.guard';
 
-
-
 @Controller('customer')
 export class CustomerController {
     constructor(private readonly customerService: CustomerService) { }

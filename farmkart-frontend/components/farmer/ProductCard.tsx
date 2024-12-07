@@ -14,24 +14,19 @@ interface ProductCardProps {
       name: string;
     } | null;
   };
-  onDelete: (id: string) => Promise<void>; // Add onDelete prop
-  // onUpdate: (id: string, updatedData: any) => Promise<void>; // Add onUpdate prop
-  onEdit: (product: any) => void; // Add onEdit prop
+  onDelete: (id: string) => Promise<void>;
+  onEdit: (product: any) => void;
 }
 
 export default function ProductCard({ product, onDelete, onEdit }: ProductCardProps) {
-  const { _id, name, price, stock, imageUrl, description, farmer } = product;
-
-  const handleAddToCart = () => {
-    console.log("Product added");
-  };
+  const { _id, name, price, imageUrl, description } = product;
 
   const handleDelete = () => {
     onDelete(_id);
   };
 
   const handleUpdate = () => {
-    onEdit(product); // Call the onEdit function with the product data
+    onEdit(product);
   };
 
   return (
