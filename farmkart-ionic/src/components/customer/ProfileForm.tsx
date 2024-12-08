@@ -52,7 +52,7 @@ const ProfileForm: React.FC<ProfileFormProps> = ({ user }) => {
 
     try {
       await axios.patch(
-        `http://localhost:3002/customer/${user._id}`, // Use the user ID from props
+        `http://localhost:3002/customer/${user._id}`,
         formData,
         { headers: { Authorization: `Bearer ${token}` } }
       );

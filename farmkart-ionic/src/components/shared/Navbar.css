@@ -4,7 +4,7 @@
     justify-content: space-between;
     align-items: center;
     padding: 1rem 2rem;
-    background-color: #8f802c; /* Matching the theme */
+    background-color: #8f802c;
     color: white;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     position: fixed;
@@ -21,11 +21,11 @@
   
   /* Login Button Styling */
   .navbar-login {
-    background-color: #d4af37; /* Modern gold shade for contrast */
+    background-color: #d4af37;
     color: white;
     border: none;
     padding: 0.6rem 1.4rem;
-    border-radius: 50px; /* Rounded edges for a modern look */
+    border-radius: 50px;
     font-size: 1rem;
     font-weight: bold;
     cursor: pointer;
@@ -36,13 +36,11 @@
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
   }
   
-  /* Hover Effect for Login Button */
   .navbar-login:hover {
-    background-color: #bfa025; /* Slightly darker gold shade */
+    background-color: #bfa025;
     transform: translateY(-2px);
   }
   
-  /* Icon inside the Button */
   .button-icon {
     margin-left: 8px;
     height: 18px;

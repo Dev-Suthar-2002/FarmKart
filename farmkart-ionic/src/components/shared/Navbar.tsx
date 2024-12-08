@@ -6,23 +6,20 @@ import "./Navbar.css";
 const Navbar: React.FC = () => {
   const history = useHistory();
 
-  // Check if the user is logged in
   const isLoggedIn = !!localStorage.getItem("access_token");
 
   const handleLogin = () => {
     console.log("Redirecting to /auth/login");
-    history.replace("/auth/login"); // Redirect to Login page
+    history.replace("/auth/login");
   };
 
   const handleLogout = () => {
     console.log("Logging out and redirecting to /landing");
-    // Clear user session data
     localStorage.removeItem("access_token");
     localStorage.removeItem("user");
     localStorage.removeItem("expiration_time");
 
-    // Redirect to the Landing page
-    history.replace("/landing"); // Use replace to avoid history stack buildup
+    history.replace("/landing");
   };
 
   return (
@@ -65,7 +62,7 @@ const Navbar: React.FC = () => {
             >
               <path
                 fillRule="evenodd"
-                d="M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25Zm4.28 10.28a.75.75 0 0 0 0-1.06l-3-3a.75.75 0 1 0-1.06 1.06l1.72 1.72H8.25a.75.75 0 0 0 0 1.5h5.69l-1.72 1.72a.75.75 0 1 0 1.06 1.06l3-3Z"
+                d="M12 2.25c-5.385  0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25Zm4.28 10.28a.75.75 0 0 0 0-1.06l-3-3a.75.75 0 1 0-1.06 1.06l1.72 1.72H8.25a.75.75 0 0 0 0 1.5h5.69l-1.72 1.72a.75.75 0 1 0 1.06 1.06l3-3Z"
                 clipRule="evenodd"
               />
             </svg>

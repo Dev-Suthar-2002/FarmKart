@@ -13,7 +13,6 @@ export function useUser() {
   const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
   const history = useHistory();
 
-  // Load user data from localStorage
   useEffect(() => {
     const storedUser = localStorage.getItem('user');
     const token = localStorage.getItem('access_token');
@@ -24,12 +23,11 @@ export function useUser() {
         setUser(JSON.parse(storedUser));
         setIsAuthenticated(true);
       } else {
-        logout(); // Token expired
+        logout();
       }
     }
   }, []);
 
-  // Login function
   const login = (userData: User, token: string, expirationTime: number) => {
     localStorage.setItem('user', JSON.stringify(userData));
     localStorage.setItem('access_token', token);
@@ -38,14 +36,13 @@ export function useUser() {
     setIsAuthenticated(true);
   };
 
-  // Logout function
   const logout = () => {
     localStorage.removeItem('user');
     localStorage.removeItem('access_token');
     localStorage.removeItem('expiration_time');
     setUser(null);
     setIsAuthenticated(false);
-    history.push('/auth/login'); // Redirect to login page
+    history.push('/auth/login');
   };
 
   return { user, isAuthenticated, login, logout };

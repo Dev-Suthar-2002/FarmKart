@@ -1,6 +1,6 @@
 .orders-page {
-    padding-top: 80px; /* Adjust for navbar */
-    padding-bottom: 60px; /* Adjust for footer */
+    padding-top: 80px;
+    padding-bottom: 60px;
     background-color: #f9f9f9;
     min-height: 100vh;
   }

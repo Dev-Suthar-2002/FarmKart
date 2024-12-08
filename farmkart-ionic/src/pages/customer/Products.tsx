@@ -32,10 +32,9 @@ const Products: React.FC = () => {
   const [filteredProducts, setFilteredProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
-  const [searchQuery, setSearchQuery] = useState<string>(''); // State for search query
+  const [searchQuery, setSearchQuery] = useState<string>('');
   const {addToCart} = useCart();
 
-  // Fetch Products
   useEffect(() => {
     const fetchProducts = async () => {
       try {
@@ -53,7 +52,6 @@ const Products: React.FC = () => {
     fetchProducts();
   }, []);
 
-  // Handle Search
   const handleSearch = (query: string) => {
     setSearchQuery(query);
 

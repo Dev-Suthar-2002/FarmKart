@@ -10,8 +10,8 @@ import { IonContent, IonSpinner } from '@ionic/react';
 const LandingPage: React.FC = () => {
   const [products, setProducts] = useState<any[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
+  const [error, setError] = useState<string | null>(null); 
 
-  // Fetch products from the backend
   useEffect(() => {
     const fetchProducts = async () => {
       try {
@@ -19,6 +19,7 @@ const LandingPage: React.FC = () => {
         setProducts(response.data);
       } catch (error) {
         console.error('Error fetching products:', error);
+        setError('Failed to load products. Please try again later.');
       } finally {
         setLoading(false);
       }
@@ -50,13 +51,15 @@ const LandingPage: React.FC = () => {
               <IonSpinner name="crescent" />
               <p>Loading products...</p>
             </div>
+          ) : error ? (
+            <p className="error-message">{error}</p>
           ) : products.length > 0 ? (
             <div className="product-grid">
               {products.map((product) => (
                 <ProductCard
                   key={product._id}
                   product={product}
-                  onAddToCart={(product : any) => console.log('Added to cart:', product)}
+                  onAddToCart={(product: any) => console.log('Added to cart:', product)}
                 />
               ))}
             </div>
@@ -66,7 +69,7 @@ const LandingPage: React.FC = () => {
         </section>
 
         {/* Footer */}
-          <Footer />
+        <Footer />
       </div>
     </IonContent>
   );
