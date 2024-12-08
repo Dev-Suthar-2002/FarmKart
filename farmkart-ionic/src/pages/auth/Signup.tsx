@@ -44,7 +44,6 @@ const Signup: React.FC = () => {
         },
       });
 
-      // Redirect to login page
       history.push('/auth/login');
     } catch (error) {
       console.error('Registration failed:', error);

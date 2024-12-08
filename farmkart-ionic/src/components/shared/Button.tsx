@@ -2,10 +2,10 @@ import React from 'react';
 import './Button.css';
 
 interface ButtonProps {
-  text: string; // Text to display on the button
-  onClick?: () => void; // Function to handle click events
-  icon?: JSX.Element; // Optional icon
-  className?: string; // Additional class names for customization
+  text: string;
+  onClick?: () => void;
+  icon?: JSX.Element;
+  className?: string;
 }
 
 const Button: React.FC<ButtonProps> = ({ text, onClick, icon, className }) => {

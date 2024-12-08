@@ -1,8 +1,6 @@
-/* CartPage.css */
-
 .cart-container {
     max-width: 800px;
-    margin: 80px auto; /* Add top margin to offset navbar */
+    margin: 80px auto;
     padding: 20px;
     background-color: #fff;
     border-radius: 10px;

@@ -10,7 +10,6 @@ const HomePage: React.FC = () => {
   const [products, setProducts] = useState<any[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
 
-  // Fetch products from the backend
   useEffect(() => {
     const fetchProducts = async () => {
       try {

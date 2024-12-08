@@ -3,11 +3,11 @@ import { useHistory } from 'react-router-dom';
 import './Hero.css';
 
 interface HeroProps {
-  backgroundImage: string; // Path to the background image
-  title: string; // Main headline
-  subtitle: string; // Subheading
-  buttonText: string; // Button text
-  buttonLink: string; // Link for the button
+  backgroundImage: string;
+  title: string;
+  subtitle: string;
+  buttonText: string;
+  buttonLink: string;
 }
 
 const Hero: React.FC<HeroProps> = ({
@@ -17,10 +17,10 @@ const Hero: React.FC<HeroProps> = ({
   buttonText,
   buttonLink,
 }) => {
-  const history = useHistory(); // Ionic's navigation hook
+  const history = useHistory();
 
   const handleButtonClick = () => {
-    history.push(buttonLink); // Navigate to the provided link
+    history.push(buttonLink);
   };
 
   return (

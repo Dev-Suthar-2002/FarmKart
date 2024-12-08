@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { IonCard, IonCardHeader, IonCardTitle, IonCardContent } from '@ionic/react';
-import Button from '../shared/Button'; // Custom Button Component
+import Button from '../shared/Button';
 import './ProductCard.css';
 
 interface ProductCardProps {
@@ -16,12 +16,12 @@ interface ProductCardProps {
       name: string;
     };
   };
-  onAddToCart: (product: any) => void; // Callback for add-to-cart functionality
+  onAddToCart: (product: any) => void;
 }
 
 const ProductCard: React.FC<ProductCardProps> = ({ product, onAddToCart }) => {
   // Base URL for your backend server
-  const BASE_URL = 'http://localhost:3002/uploads/'; // Update with your actual backend URL
+  const BASE_URL = 'http://localhost:3002/uploads/';
 
 
   return (

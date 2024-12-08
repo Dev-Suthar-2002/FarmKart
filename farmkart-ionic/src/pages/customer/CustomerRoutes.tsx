@@ -5,7 +5,7 @@ import Products from './Products';
 import ProfilePage from './ProfilePage';
 import CartPage from './CartPage';
 import OrdersPage from './OrdersPage';
-import HomePage from './Home'; // Ensure you import the HomePage component
+import HomePage from './Home';
 import Navbar from '../../components/shared/Navbar';
 import Footer from '../../components/shared/Footer';
 

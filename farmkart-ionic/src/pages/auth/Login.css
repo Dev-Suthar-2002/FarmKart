@@ -2,21 +2,21 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  min-height: 100vh; /* Full viewport height */
-  background: linear-gradient(135deg, #e0f7fa, #b2dfdb); /* Modern gradient background */
-  padding: 1rem; /* Padding to prevent content from being flush with the edges on smaller screens */
+  min-height: 100vh;
+  background: linear-gradient(135deg, #e0f7fa, #b2dfdb);
+  padding: 1rem;
   box-sizing: border-box;
 }
 
 .auth-container {
   width: 100%;
-  max-width: 400px; /* Constrain to a maximum width */
+  max-width: 400px;
   padding: 2rem;
   background: white;
   border-radius: 12px;
-  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15); /* Pronounced shadow */
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
   text-align: center;
-  transition: transform 0.3s, box-shadow 0.3s; /* Smooth hover effects */
+  transition: transform 0.3s, box-shadow 0.3s;
 }
 
 .auth-container:hover {
@@ -25,9 +25,9 @@
 }
 
 .auth-title {
-  font-size: 2rem; /* Adjusted for better responsiveness */
-  font-weight: 800; /* Extra bold */
-  color: #004d40; /* Darker green for better contrast */
+  font-size: 2rem;
+  font-weight: 800;
+  color: #004d40;
   margin-bottom: 1.5rem;
 }
 
@@ -36,7 +36,7 @@
 }
 
 .auth-error {
-  color: #d32f2f; /* Modern red */
+  color: #d32f2f; 
   font-size: 0.9rem;
   margin-top: 0.5rem;
   animation: fadeIn 0.3s ease-in-out;
@@ -45,13 +45,13 @@
 .auth-forgot-password {
   margin-top: 1rem;
   font-size: 0.9rem;
-  color: #0288d1; /* Bright blue */
+  color: #0288d1;
   cursor: pointer;
   transition: color 0.2s;
 }
 
 .auth-forgot-password:hover {
-  color: #01579b; /* Darker blue */
+  color: #01579b;
   text-decoration: underline;
 }
 
@@ -65,25 +65,25 @@
   font-size: 1rem;
   font-weight: bold;
   color: white;
-  background: linear-gradient(135deg, #388e3c, #2e7d32); /* Vibrant green gradient */
+  background: linear-gradient(135deg, #388e3c, #2e7d32);
   border-radius: 12px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Subtle button shadow */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   transition: background 0.3s, transform 0.2s, box-shadow 0.2s;
 }
 
 .auth-button:hover {
-  background: linear-gradient(135deg, #4caf50, #43a047); /* Slightly brighter green */
+  background: linear-gradient(135deg, #4caf50, #43a047);
   transform: translateY(-3px);
   box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
 }
 
 @media (max-width: 600px) {
   .auth-container {
-    padding: 1.5rem; /* Adjust padding for smaller screens */
+    padding: 1.5rem;
   }
 
   .auth-title {
-    font-size: 1.8rem; /* Slightly smaller title on mobile */
+    font-size: 1.8rem;
   }
 }
 

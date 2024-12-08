@@ -1,7 +1,7 @@
 import { IonPage, IonRouterOutlet } from '@ionic/react';
 import { Route } from 'react-router-dom';
-import Login from './Login'; // Ensure the path matches your file structure
-import Signup from './Signup'; // Ensure the path matches your file structure
+import Login from './Login';
+import Signup from './Signup';
 
 const Auth: React.FC = () => {
   return (

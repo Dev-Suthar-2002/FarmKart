@@ -1,19 +1,18 @@
-/* General Layout */
 body {
   margin: 0;
   padding: 0;
-  overflow-x: hidden; /* Prevent horizontal scrolling */
-  height: 100%; /* Ensure body takes full height */
+  overflow-x: hidden;
+  height: 100%;
 }
 
 ion-content {
   --padding-start: 0;
   --padding-end: 0;
-  --overflow: auto; /* Ensure content can overflow */
+  --overflow: auto;
 }
 
 .landing {
-  min-height: 100vh; /* Ensure the content takes up the full height of the viewport */
+  min-height: 100vh;
 }
 
 /* Hero Section */
@@ -23,7 +22,7 @@ ion-content {
   background: linear-gradient(135deg, #00796b, #004d40);
   color: white;
   border-radius: 0 0 20px 20px;
-  margin-bottom: 2rem; /* Add spacing to avoid content overlap */
+  margin-bottom: 2rem;
 }
 
 .hero-title {
@@ -59,7 +58,7 @@ ion-content {
 
 /* Products Section */
 .products {
-  padding: 4rem 2rem 3rem; /* Bottom padding for scrolling space */
+  padding: 4rem 2rem 3rem;
   background-color: #f9f9f9;
 }
 
@@ -94,9 +93,9 @@ ion-content {
 
 .product-card img {
   width: 100%;
-  max-width: 200px; /* Fixed size for consistency */
+  max-width: 200px;
   height: 150px;
-  object-fit: cover; /* Ensures the image doesn't distort */
+  object-fit: cover;
   border-radius: 8px;
   margin-bottom: 1rem;
 }
